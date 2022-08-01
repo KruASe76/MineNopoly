@@ -1,0 +1,5 @@
+name: MineNopoly
+version: '${project.version}'
+main: me.kruase.minenopoly.Minenopoly
+api-version: 1.19
+authors: [ KruASe ]
