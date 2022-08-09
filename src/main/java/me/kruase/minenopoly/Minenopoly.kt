@@ -9,6 +9,7 @@ class Minenopoly : JavaPlugin() {
     companion object {
         lateinit var instance: Minenopoly
         lateinit var scoreboard: Scoreboard
+        lateinit var mConfig: MinenopolyConfig
 
         var gameRunning: Boolean = false
 
@@ -24,9 +25,7 @@ class Minenopoly : JavaPlugin() {
     override fun onEnable() {
         instance = this
         scoreboard = MinenopolyScoreboard.new(server)
-
-        saveDefaultConfig()
-        ensureConfigIsValid(instance)
+        mConfig = getMinenopolyConfig(instance)
 
         getCommand("monopoly")!!.setExecutor(MinenopolyCommands())
 

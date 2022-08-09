@@ -3,7 +3,7 @@ package me.kruase.minenopoly.util
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.PlayerInventory
 import org.bukkit.inventory.ItemStack
-import me.kruase.minenopoly.MinenopolyConfig.Materials
+import me.kruase.minenopoly.Minenopoly.Companion.mConfig
 
 
 var Inventory.money: Int
@@ -13,7 +13,7 @@ var Inventory.money: Int
             else -> contents
         }
 
-        return Materials.money.map { (cost, material) ->
+        return mConfig.materials.money.map { (cost, material) ->
             allItems.filter { it?.type == material && it.itemMeta?.displayName == getMoneyItemName(cost.toString()) }
                 .sumOf { it.amount } * cost
         }.sum()
@@ -28,7 +28,7 @@ var Inventory.money: Int
 
         @Suppress("NAME_SHADOWING")
         var value = value
-        Materials.money.forEach { (cost, material) ->
+        mConfig.materials.money.forEach { (cost, material) ->
             val amount = value / cost
             val overflow = addItem(
                 ItemStack(material, amount).apply { itemMeta = itemMeta
