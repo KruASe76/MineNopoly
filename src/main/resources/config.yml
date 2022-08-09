@@ -1,0 +1,20 @@
+items:
+    money: # You can specify both items and denominations
+        1: minecraft:flint
+        5: minecraft:coal
+        10: minecraft:quartz
+        20: minecraft:lapis_lazuli
+        50: minecraft:iron_nugget
+        100: minecraft:gold_nugget
+        500: minecraft:emerald
+    chance: minecraft:chorus_fruit
+    community-chest: minecraft:diamond
+messages:
+    help:
+        header: "§7-------- §6[§aMineNopoly§6] §7------------------------"
+        help: §a/mp help [command] §r- Show help for given command, for available commands otherwise
+        start: §a/<command> start <block> §r- Start the game with given block as the bank
+        finish: §a/<command> finish §r- Finish the game and save the log file
+        finish-forced: §a/<command> finish forced §r- Finish even if not all game items have been returned
+        book: §a/<command> book §r- Get the book to use during the game
+        give: §a/<command> give <args> §r- Auxiliary command used when clicking on links in the book

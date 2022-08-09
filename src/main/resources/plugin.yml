@@ -1,5 +1,53 @@
 name: MineNopoly
 version: '${project.version}'
 main: me.kruase.minenopoly.Minenopoly
-api-version: 1.19
+api-version: 1.16
 authors: [ KruASe ]
+
+description: Implements Monopoly bank into Minecraft
+
+libraries:
+    - org.jetbrains.kotlin:kotlin-stdlib:1.7.10
+
+commands:
+    monopoly:
+        description: Main MineNopoly plugin command
+        permission: minenopoly.help
+        usage: |-
+            §7Run §6/help <command> [n] §7to get page n of help
+            §a/<command> help [command] §r- Show help for given command, for available commands otherwise
+            §a/<command> start <block> §r- Start the game with given block as the bank
+            §a/<command> finish §r- Finish the game and save the log file
+            §a/<command> finish forced §r- Finish even if not all game items have been returned
+            §a/<command> book §r- Get the book to use during the game
+            §a/<command> give <args> §r- Auxiliary command used when clicking on links in the book
+            §cWARNING: §eCommands listed here might be unavailable for you, to get help for available commands run §a/<command> help
+        aliases:
+            - mp
+
+permissions:
+    minenopoly.help:
+        description: Allows to use §a/mp help §r(lists only available commands)
+        default: true
+    minenopoly.give:
+        description: Allows to use §a/mp give §rand chat entries (allows to play basically)
+        default: true
+    minenopoly.start:
+        description: Allows to use §a/mp start
+        default: true
+    minenopoly.finish:
+        description: Allows to use §a/mp finish §r(without §aforced §rargument)
+        default: true
+    minenopoly.finish.forced:
+        description: Allows to use §a/mp finish forced
+        default: op
+        children:
+            minenopoly.finish: true
+    minenopoly.book:
+        description: Allows to use §a/mp book §r
+        default: true
+    minenopoly.admin:
+        description: Refers to §2minenopoly.finish.forced §rby default
+        default: op
+        children:
+            minenopoly.finish.forced: true
