@@ -2,7 +2,6 @@ package me.kruase.minenopoly
 
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scoreboard.Scoreboard
-import org.bukkit.block.Container
 
 
 class Minenopoly : JavaPlugin() {
@@ -12,14 +11,7 @@ class Minenopoly : JavaPlugin() {
         lateinit var mConfig: MinenopolyConfig
 
         var gameRunning: Boolean = false
-
-        var bank: Container? = null
-        var moneyInGame: Int? = null
-        var chancesInGame: Int? = null
-        var communityChestsInGame: Int? = null
-        var propertiesInGame: Int? = null
-        var housesInGame: Int? = null
-        var hotelsInGame: Int? = null
+        var gameData: MinenopolyGameData? = null
     }
 
     override fun onEnable() {

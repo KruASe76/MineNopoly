@@ -13,8 +13,12 @@ messages:
     help:
         header: "§7-------- §6[§aMineNopoly§6] §7------------------------"
         help: §a/mp help [command] §r- Show help for given command, for available commands otherwise
-        start: §a/<command> start <block> §r- Start the game with given block as the bank
-        finish: §a/<command> finish §r- Finish the game and save the log file
-        finish-forced: §a/<command> finish forced §r- Finish even if not all game items have been returned
-        book: §a/<command> book §r- Get the book to use during the game
-        give: §a/<command> give <args> §r- Auxiliary command used when clicking on links in the book
+        start: §a/mp start <block> §r- Start the game with given block as the bank
+        finish: §a/mp finish §r- Finish the game and save the log file
+        finish-forced: §a/mp finish forced §r- Finish even if not all game items have been returned
+        book: §a/mp book §r- Get the book to use during the game
+        reload: §a/mp reload §r- Reload config
+        get: §a/mp get <args> §r- Auxiliary command used when clicking on links in the book
+    error:
+        invalid-command: Invalid command!
+        player-only: This command can only be called by a player!

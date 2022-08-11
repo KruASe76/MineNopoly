@@ -20,7 +20,8 @@ commands:
             §a/<command> finish §r- Finish the game and save the log file
             §a/<command> finish forced §r- Finish even if not all game items have been returned
             §a/<command> book §r- Get the book to use during the game
-            §a/<command> give <args> §r- Auxiliary command used when clicking on links in the book
+            §a/<command> reload §r- Reload config
+            §a/<command> get <args> §r- Auxiliary command used when clicking on links in the book
             §cWARNING: §eCommands listed here might be unavailable for you, to get help for available commands run §a/<command> help
         aliases:
             - mp
@@ -29,8 +30,8 @@ permissions:
     minenopoly.help:
         description: Allows to use §a/mp help §r(lists only available commands)
         default: true
-    minenopoly.give:
-        description: Allows to use §a/mp give §rand chat entries (allows to play basically)
+    minenopoly.get:
+        description: Allows to use §a/mp get §rand chat entries (allows to play basically)
         default: true
     minenopoly.start:
         description: Allows to use §a/mp start
@@ -44,10 +45,14 @@ permissions:
         children:
             minenopoly.finish: true
     minenopoly.book:
-        description: Allows to use §a/mp book §r
+        description: Allows to use §a/mp book
         default: true
+    minenopoly.reload:
+        description: Allows to use §a/mp reload
+        default: op
     minenopoly.admin:
         description: Refers to §2minenopoly.finish.forced §rby default
         default: op
         children:
+            minenopoly.reload: true
             minenopoly.finish.forced: true

@@ -13,6 +13,8 @@ data class MinenopolyConfig(private val config: FileConfiguration) {
 
 fun getMinenopolyConfig(plugin: Plugin): MinenopolyConfig {
     return try {
+        plugin.saveDefaultConfig()
+        plugin.reloadConfig()
         MinenopolyConfig(plugin.config)
     } catch (e: NullPointerException) {
         plugin.logger.severe("Invalid Minenopoly config detected! Creating a new one (default)...")
@@ -31,7 +33,7 @@ fun getMinenopolyConfig(plugin: Plugin): MinenopolyConfig {
 data class MaterialsConfig(private val config: FileConfiguration) {
     val money: Map<Int, Material> = config.getConfigurationSection("items.money")!!
         .getKeys(false).sortedByDescending { it.toInt() }.associate {
-            it.toInt() to Material.matchMaterial(config.getString("items.money.${it}")!!)!!
+            it.toInt() to Material.matchMaterial(config.getString("items.money.$it")!!)!!
         }
     val chance: Material = Material.matchMaterial(config.getString("items.chance")!!)!!
     val communityChest: Material = Material.matchMaterial(config.getString("items.community-chest")!!)!!
@@ -39,5 +41,7 @@ data class MaterialsConfig(private val config: FileConfiguration) {
 
 data class MessagesConfig(private val config: FileConfiguration) {
     val help: Map<String, String> = config.getConfigurationSection("messages.help")!!
-        .getKeys(false).associateWith { config.getString("messages.help.${it}")!! }
+        .getKeys(false).associateWith { config.getString("messages.help.$it")!! }
+    val error: Map<String, String> = config.getConfigurationSection("messages.error")!!
+        .getKeys(false).associateWith { config.getString("messages.error.$it")!! }
 }
