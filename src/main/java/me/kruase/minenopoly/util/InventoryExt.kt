@@ -14,7 +14,7 @@ var Inventory.money: Int
         }
 
         return mConfig.materials.money.map { (cost, material) ->
-            allItems.filter { it?.type == material && it.itemMeta?.displayName == getMoneyItemName(cost.toString()) }
+            allItems.filter { it?.type == material && it.itemMeta?.persistentDataContainer?.hasMark() == true }
                 .sumOf { it.amount } * cost
         }.sum()
     }
@@ -32,7 +32,10 @@ var Inventory.money: Int
             val amount = value / cost
             val overflow = addItem(
                 ItemStack(material, amount).apply { itemMeta = itemMeta
-                    ?.apply { setDisplayName(getMoneyItemName(cost.toString())) }}
+                    ?.apply {
+                        setDisplayName(getMoneyItemName(cost.toString()))
+                        persistentDataContainer.addMark()
+                    }}
             )
             for (itemStack in overflow.values) {
                 location?.world?.dropItem(location!!, itemStack)
@@ -41,4 +44,3 @@ var Inventory.money: Int
             value %= cost
         }
     }
-

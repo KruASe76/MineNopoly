@@ -8,10 +8,10 @@ A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into 
 - [ ] Monopoly bank functionality using a `chest` or a `barrel` in which game money items are placed and removed from
 - [ ] _Chance_ and _Community chest_ cards random cycle (shuffled card deck imitation)
 - [x] Player balance tracking using a scoreboard
-- [ ] _Houses_ and _Hotels_ implementation using candles (`green_candle` as a _House_, `red_candle` as a _Hotel_)
+- [ ] _Houses_ implementation using sea pickles (can be placed up to 4 four in a block)
 - [ ] A book with links to get game items and a list and descriptions of all game properties
 - [ ] Built-in dice randomizer
-- [x] Anti-counterfeiting game money items (default: `flint`, `coal`, `quartz`, `lapis_lazuli`, `iron_nugget`, `gold_nugget`, `emerald`) protection via custom (unreachable in survival) item names
+- [x] Anti-counterfeiting game money items (default: `flint`, `coal`, `quartz`, `lapis_lazuli`, `iron_nugget`, `gold_nugget`, `emerald`) protection via [NBT data](https://minecraft.fandom.com/wiki/NBT_format)
 - [ ] Game money tracking in player inventories using a log file with player balance changes
 
 
@@ -48,21 +48,21 @@ _Note:_ Only available during the game.
 
 
 ## Permissions
-| Permission node            | Default | Description                                                            |
-|----------------------------|---------|------------------------------------------------------------------------|
-| `minenopoly.help`          | true    | Allows to use `/mp help` (lists only available commands)               |
-| `minenopoly.get`           | true    | Allows to use `/mp get` and chat entries (allows to play basically)    |
-| `minenopoly.start`         | true    | Allows to use `/mp start`                                              |
-| `minenopoly.finish`        | true    | Allows to use `/mp finish` (without `forced` argument)                 |
-| `minenopoly.finish.forced` | op      | Allows to use `/mp finish forced`                                      |
-| `minenopoly.book`          | true    | Allows to use `/mp book`                                               |
-| `minenopoly.reload`        | op      | Allows to use `/mp reload`                                             |
+| Permission node            | Default | Description                                                             |
+|----------------------------|---------|-------------------------------------------------------------------------|
+| `minenopoly.help`          | true    | Allows to use `/mp help` (lists only available commands)                |
+| `minenopoly.get`           | true    | Allows to use `/mp get` and chat entries (allows to play basically)     |
+| `minenopoly.start`         | true    | Allows to use `/mp start`                                               |
+| `minenopoly.finish`        | true    | Allows to use `/mp finish` (without `forced` argument)                  |
+| `minenopoly.finish.forced` | op      | Allows to use `/mp finish forced`                                       |
+| `minenopoly.book`          | true    | Allows to use `/mp book`                                                |
+| `minenopoly.reload`        | op      | Allows to use `/mp reload`                                              |
 | `minenopoly.admin`         | op      | Refers to `minenopoly.reload` and `minenopoly.finish.forced` by default |
 
 
 ## Game field
 
-Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/additions/Monopoly_Field.litematic) of the game field designed by me, however, you can build your own!
+Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/additions/monopoly_field.litematic) of the game field designed by me, however, you can build your own!
 
 
 ## Reference
