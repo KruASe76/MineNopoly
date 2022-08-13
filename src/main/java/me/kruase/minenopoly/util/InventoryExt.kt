@@ -21,8 +21,7 @@ var Inventory.money: Int
     set(value) {
         removeItem(
             *contents.filter {
-                Regex(getMoneyItemName("\\d+"))
-                    .matches(it?.itemMeta?.displayName ?: "")
+                it?.itemMeta?.persistentDataContainer?.hasMark() == true
             }.toTypedArray()
         )
 
@@ -33,7 +32,7 @@ var Inventory.money: Int
             val overflow = addItem(
                 ItemStack(material, amount).apply { itemMeta = itemMeta
                     ?.apply {
-                        setDisplayName(getMoneyItemName(cost.toString()))
+                        setDisplayName(getMoneyItemName(cost))
                         persistentDataContainer.addMark()
                     }}
             )

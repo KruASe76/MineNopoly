@@ -6,7 +6,7 @@
 
     <groupId>me.kruase</groupId>
     <artifactId>mine-nopoly</artifactId>
-    <version>0.3</version>
+    <version>0.3.1</version>
     <packaging>jar</packaging>
 
     <name>mine-nopoly</name>
