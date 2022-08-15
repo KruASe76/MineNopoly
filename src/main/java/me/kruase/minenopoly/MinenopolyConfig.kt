@@ -16,16 +16,25 @@ fun getMinenopolyConfig(plugin: Plugin): MinenopolyConfig {
         plugin.saveDefaultConfig()
         plugin.reloadConfig()
         MinenopolyConfig(plugin.config)
-    } catch (e: NullPointerException) {
-        plugin.logger.severe("Invalid Minenopoly config detected! Creating a new one (default)...")
-        File(plugin.dataFolder, "config.yml").renameTo(
-            File(plugin.dataFolder, "config.yml.old-${System.currentTimeMillis()}")
-        )
-        plugin.saveDefaultConfig()
-        plugin.reloadConfig()
-        plugin.logger.info("New (default) config created!")
-        MinenopolyConfig(plugin.config)
+    } catch (e: Exception) {
+        when (e) {
+            is NullPointerException, is NumberFormatException -> {
+                newDefaultConfig(plugin)
+                MinenopolyConfig(plugin.config)
+            }
+            else -> throw e
+        }
     }
+}
+
+fun newDefaultConfig(plugin: Plugin) {
+    plugin.logger.severe("Invalid Minenopoly config detected! Creating a new one (default)...")
+    File(plugin.dataFolder, "config.yml").renameTo(
+        File(plugin.dataFolder, "config.yml.old-${System.currentTimeMillis()}")
+    )
+    plugin.saveDefaultConfig()
+    plugin.reloadConfig()
+    plugin.logger.info("New (default) config created!")
 }
 
 
@@ -44,4 +53,6 @@ data class MessagesConfig(private val config: FileConfiguration) {
         .getKeys(false).associateWith { config.getString("messages.help.$it")!! }
     val error: Map<String, String> = config.getConfigurationSection("messages.error")!!
         .getKeys(false).associateWith { config.getString("messages.error.$it")!! }
+    val info: Map<String, String> = config.getConfigurationSection("messages.info")!!
+        .getKeys(false).associateWith { config.getString("messages.info.$it")!! }
 }

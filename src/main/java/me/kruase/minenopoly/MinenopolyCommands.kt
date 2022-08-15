@@ -70,16 +70,28 @@ class MinenopolyCommands : TabExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         try {
             when (args.getOrNull(0)) {
-                null -> help(sender, args)
+                null -> help(sender, arrayOf())
                 "help" -> help(sender, args.drop(1).toTypedArray())
-                "start" -> playerOnly(sender) { start(sender, args.drop(1).toTypedArray()) }
+                "start" -> playerOnly(sender) { start(sender as Player, args.drop(1).toTypedArray()) }
                 "finish" -> finish(sender, args.drop(1).toTypedArray())
-                "book" -> playerOnly(sender) { book(sender, args.drop(1).toTypedArray()) }
-                "get" -> playerOnly(sender) { get(sender, args.drop(1).toTypedArray()) }
-                "reload" -> Minenopoly.mConfig = getMinenopolyConfig(Minenopoly.instance)
+                "book" -> playerOnly(sender) { book(sender as Player, args.drop(1).toTypedArray()) }
+                "get" -> playerOnly(sender) { get(sender as Player, args.drop(1).toTypedArray()) }
+                "reload" -> {
+                    if (!sender.hasPermission("minenopoly.reload")) throw UnsupportedOperationException()
+                    Minenopoly.mConfig = getMinenopolyConfig(Minenopoly.instance)
+                }
             }
+        } catch (e: UnsupportedOperationException) {
+            sender.sendMessage(
+                "${ChatColor.RED}${Minenopoly.mConfig.messages.error["no-permission"] ?: "Error: no-permission"}"
+            )
         } catch (e: IllegalArgumentException) {
-            sender.sendMessage("${ChatColor.RED}${Minenopoly.mConfig.messages.error["invalid-command"]}")
+            sender.sendMessage(
+                "${ChatColor.RED}${Minenopoly.mConfig.messages.error["invalid-command"] ?: "Error: invalid-command"}"
+            )
+        } catch (e: IllegalStateException) {
+            // "Unknown error" should never happen
+            sender.sendMessage("${ChatColor.RED}${e.message ?: "Unknown error"}")
         }
 
         return true
@@ -88,7 +100,9 @@ class MinenopolyCommands : TabExecutor {
     private fun playerOnly(sender: CommandSender, run: () -> Unit) {
         when (sender) {
             is Player -> run()
-            else -> sender.sendMessage("${ChatColor.RED}${Minenopoly.mConfig.messages.error["player-only"]}")
+            else -> sender.sendMessage(
+                "${ChatColor.RED}${Minenopoly.mConfig.messages.error["player-only"] ?: "Error: player-only"}"
+            )
         }
     }
 

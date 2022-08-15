@@ -6,7 +6,7 @@ import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.Server
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import me.kruase.minenopoly.util.money
+import me.kruase.minenopoly.util.*
 
 object MinenopolyScoreboard {
     fun new(server: Server): Scoreboard =
@@ -21,14 +21,16 @@ object MinenopolyScoreboard {
 }
 
 fun Scoreboard.update(player: Player) {
-    when (val money: Int = player.inventory.money) {
-        0 -> {
-            resetScores(player.name)
-            player.scoreboard = player.server.scoreboardManager!!.mainScoreboard
-        }
-        else -> {
-            getObjective("money")!!.getScore(player.name).apply { score = money }
-            player.scoreboard = this
+    player.run {
+        when (isInGame()) {
+            true -> {
+                getObjective("money")!!.getScore(name).apply { score = inventory.money }
+                scoreboard = this@update
+            }
+            false -> {
+                resetScores(name)
+                scoreboard = server.scoreboardManager!!.mainScoreboard
+            }
         }
     }
 }
