@@ -26,11 +26,12 @@ var Inventory.money: Int
         mConfig.materials.money.forEach { (cost, material) ->
             val amount = value / cost
             val overflow = addItem(
-                ItemStack(material, amount).apply { itemMeta = itemMeta
-                    ?.apply {
+                ItemStack(material, amount).apply { itemMeta = itemMeta!!
+                    .apply {
                         setDisplayName(getMoneyItemName(cost))
                         persistentDataContainer.addMark(key)
-                    }}
+                    }
+                }
             )
             for (itemStack in overflow.values) {
                 location?.world?.dropItem(location!!, itemStack)

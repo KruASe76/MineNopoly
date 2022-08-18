@@ -28,13 +28,8 @@ fun chat(event: AsyncPlayerChatEvent) {
 
             sendGlobalMessage(
                 mConfig.messages.info["add-money"]
-                    ?.replace("{player}",
-                        event.player.playerListName.run {
-                            if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                            else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                        }
-                    )
-                    ?.replace("{n}", "${ChatColor.GREEN}$money ${ChatColor.STRIKETHROUGH}M${ChatColor.RESET}")
+                    ?.replace("{player}", getColoredName(event.player.playerListName))
+                    ?.replace("{n}", getMoneyItemName(money))
             )
         }
         event.message.matches(Regex("""-\d+""")) -> {
@@ -50,13 +45,8 @@ fun chat(event: AsyncPlayerChatEvent) {
 
             sendGlobalMessage(
                 mConfig.messages.info["remove-money"]
-                    ?.replace("{player}",
-                        event.player.playerListName.run {
-                            if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                            else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                        }
-                    )
-                    ?.replace("{n}", "${ChatColor.GREEN}$money ${ChatColor.STRIKETHROUGH}M${ChatColor.RESET}")
+                    ?.replace("{player}", getColoredName(event.player.playerListName))
+                    ?.replace("{n}", getMoneyItemName(money))
             )
         }
         event.message == "--" -> {  // TODO: test this
@@ -65,87 +55,28 @@ fun chat(event: AsyncPlayerChatEvent) {
                     gameData!!.moneyInGame -= money
                     sendGlobalMessage(
                         mConfig.messages.info["remove-money"]
-                            ?.replace("{player}",
-                                event.player.playerListName.run {
-                                    if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                                    else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                                }
-                            )
-                            ?.replace("{n}", "${ChatColor.GREEN}$money ${ChatColor.STRIKETHROUGH}M${ChatColor.RESET}")
+                            ?.replace("{player}", getColoredName(event.player.playerListName))
+                            ?.replace("{n}", getMoneyItemName(money))
                     )
+                    money = 0
                 }
                 contents.filter {
                     it?.itemMeta?.persistentDataContainer?.hasAnyMark() == true
                 }.forEach {
                     it.itemMeta!!.persistentDataContainer.run {
                         when {
-                            hasMark("chance") -> {
-                                gameData!!.chancesInGame--
-                                sendGlobalMessage(
-                                    mConfig.messages.info["remove-action-card"]
-                                        ?.replace("{player}",
-                                            event.player.playerListName.run {
-                                                if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                                                else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                                            }
-                                        )
-                                        ?.replace("{action_card}", "${ChatColor.GOLD}Chance${ChatColor.RESET}")
-                                )
-                            }
-                            hasMark("community_chest") -> {
-                                gameData!!.communityChestsInGame--
-                                sendGlobalMessage(
-                                    mConfig.messages.info["remove-action-card"]
-                                        ?.replace("{player}",
-                                            event.player.playerListName.run {
-                                                if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                                                else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                                            }
-                                        )
-                                        ?.replace("{action_card}", "${ChatColor.AQUA}Community Chest${ChatColor.RESET}")
-                                )
-                            }
-                            hasMark("house") -> {
-                                gameData!!.housesInGame--
-                                sendGlobalMessage(
-                                    mConfig.messages.info["remove-building"]
-                                        ?.replace("{player}",
-                                            event.player.playerListName.run {
-                                                if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                                                else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                                            }
-                                        )
-                                        ?.replace("{building}", "${ChatColor.DARK_GREEN}House${ChatColor.RESET}")
-                                )
-                            }
-                            hasMark("hotel") -> {
-                                gameData!!.hotelsInGame--
-                                sendGlobalMessage(
-                                    mConfig.messages.info["remove-building"]
-                                        ?.replace("{player}",
-                                            event.player.playerListName.run {
-                                                if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                                                else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                                            }
-                                        )
-                                        ?.replace("{building}", "${ChatColor.DARK_RED}Hotel${ChatColor.RESET}")
-                                )
-                            }
-                            hasMark("property") -> {
-                                gameData!!.propertiesInGame[getPropertyType()] = false
-                                sendGlobalMessage(
-                                    mConfig.messages.info["remove-property"]
-                                        ?.replace("{player}",
-                                            event.player.playerListName.run {
-                                                if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                                                else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                                            }
-                                        )
-                                        ?.replace("{property}", "${it.itemMeta!!.displayName}${ChatColor.RESET}")
-                                )
-                            }
+                            hasMark("chance") -> gameData!!.chancesInGame -= 1
+                            hasMark("community_chest") -> gameData!!.communityChestsInGame -= 1
+                            hasMark("house") -> gameData!!.housesInGame -= 1
+                            hasMark("hotel") -> gameData!!.hotelsInGame -= 1
+                            hasMark("property") -> gameData!!.propertiesInGame[getPropertyType()] = false
                         }
                     }
+                    sendGlobalMessage(
+                        mConfig.messages.info["remove-item"]
+                            ?.replace("{player}", getColoredName(event.player.playerListName))
+                            ?.replace("{item}", it.itemMeta!!.displayName)
+                    )
                     remove(it)
                 }
             }

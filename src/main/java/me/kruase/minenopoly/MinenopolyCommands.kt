@@ -9,8 +9,6 @@ import me.kruase.minenopoly.commands.*
 
 
 class MinenopolyCommands : TabExecutor {
-    private val allCommands: List<String> = listOf("help", "start", "finish", "book", "reload", "get")
-
     override fun onTabComplete(
         sender: CommandSender,
         command: Command,
@@ -19,42 +17,69 @@ class MinenopolyCommands : TabExecutor {
     ): List<String> {
         val fullArgs = args.dropLast(1)
         return when (fullArgs.getOrNull(0)) {
-            null -> allCommands.filter { sender.hasPermission("minenopoly.$it") }
-            "help" -> when (fullArgs.size) {
-                1 -> allCommands.filter { sender.hasPermission("minenopoly.$it") } - "help"
+            null -> Minenopoly.mConfig.messages.help.keys
+                .filter { sender.hasPermission("minenopoly.${it.replace("-", ".")}") } - "header" - "finish-forced"
+            "help" -> when {
+                sender.hasPermission("minenopoly.help") -> when (fullArgs.getOrNull(1)) {
+                    null -> Minenopoly.mConfig.messages.help.keys
+                        .filter { sender.hasPermission("minenopoly.${it.replace("-", ".")}") } - "header"
+                    else -> listOf()
+                }
                 else -> listOf()
             }
-            "start" -> when (sender) {
-                is Player -> targetBlockCompletion(sender, args.drop(1).toTypedArray())
+
+            "start" -> when {
+                sender.hasPermission("minenopoly.start") -> when (sender) {
+                    is Player -> targetBlockCompletion(sender, args.drop(1).toTypedArray())
+                    else -> listOf()
+                }
                 else -> listOf()
             }
             "finish" -> when {
                 sender.hasPermission("minenopoly.finish.forced") && fullArgs.size == 1 -> listOf("forced")
                 else -> listOf()
             }
-            "get" -> when (sender) {
+            "book" -> when (sender) {
                 is Player -> when (fullArgs.getOrNull(1)) {
-                    null -> listOf("chance", "community_chest", "property", "house", "hotel")
-                    "property" -> when (fullArgs.getOrNull(2)) {
-                        null -> listOf("street", "railroad", "utility")
-                        "street" -> when (fullArgs.getOrNull(3)) {
-                            null -> listOf("brown", "cyan", "pink", "orange", "red", "yellow", "green", "blue")
-                            "brown", "blue" -> when (fullArgs.size) {
-                                4 -> (1..2).map { it.toString() }
+                    null -> listOf("us", "uk", "ru")
+                    else -> listOf()
+                }
+                else -> listOf()
+            }
+            "get" -> when {
+                sender.hasPermission("minenopoly.get") -> when (sender) {
+                    is Player -> when (fullArgs.getOrNull(1)) {
+                        null -> listOf("chance", "community_chest", "property", "house", "hotel")
+                        "property" -> when (fullArgs.getOrNull(2)) {
+                            null -> listOf("us", "uk", "ru")
+                            "us", "uk", "ru" -> when (fullArgs.getOrNull(3)) {
+                                null -> listOf("street", "railroad", "utility")
+                                "street" -> when (fullArgs.getOrNull(4)) {
+                                    null -> listOf("brown", "cyan", "pink", "orange", "red", "yellow", "green", "blue")
+                                    "brown", "blue" -> when (fullArgs.getOrNull(5)) {
+                                        null -> (1..2).map { it.toString() }
+                                        else -> listOf()
+                                    }
+                                    "cyan", "pink", "orange", "red", "yellow", "green" -> when (fullArgs.getOrNull(5)) {
+                                        null -> (1..3).map { it.toString() }
+                                        else -> listOf()
+                                    }
+
+                                    else -> listOf()
+                                }
+
+                                "railroad" -> when (fullArgs.getOrNull(4)) {
+                                    null -> (1..4).map { it.toString() }
+                                    else -> listOf()
+                                }
+
+                                "utility" -> when (fullArgs.getOrNull(4)) {
+                                    null -> listOf("electric", "water")
+                                    else -> listOf()
+                                }
+
                                 else -> listOf()
                             }
-                            "cyan", "pink", "orange", "red", "yellow", "green" -> when (fullArgs.size) {
-                                4 -> (1..3).map { it.toString() }
-                                else -> listOf()
-                            }
-                            else -> listOf()
-                        }
-                        "railroad" -> when (fullArgs.size) {
-                            3 -> (1..4).map { it.toString() }
-                            else -> listOf()
-                        }
-                        "utility" -> when (fullArgs.size) {
-                            3 -> listOf("electric", "water")
                             else -> listOf()
                         }
                         else -> listOf()

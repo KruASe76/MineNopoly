@@ -13,11 +13,10 @@ messages:
     info: # To turn off certain messages lave the field empty (not empty quotes!)
         game-started: '{player} started a game at {coordinates} in the {dimension}!'
         game-finished: '{player} finished the game'
+        game-force-finished: '{player} §cforce§r-finished the game'
         add-money: '{player} added {n} to the bank'
         remove-money: '{player} removed {n} from the bank'
-        remove-property: '{player} removed {property}'
-        remove-action-card: '{player} removed {action_card} card' # Action cards are "Chance" and "Community Chest" cards
-        remove-building: '{player} removed {building}' # Building are Houses and Hotels
+        remove-item: '{player} removed {item}'
     error:
         no-permission: Not enough permissions to call this command!
         invalid-command: Invalid command!
@@ -25,6 +24,7 @@ messages:
         game-not-started: Game is not started!
         game-already-started: Game is already started on this server!
         not-a-container: The bank block has to be either a chest or a barrel!
+        unable-to-finish-game: 'Unable to finish the game: not all game items returned! To force-finish call §a/mp finish forced'
         unable-to-add-item: Unable to add item to the inventory!
         not-enough-money: The bank contains less money than it is requested to remove!
     help: # Not intended to be edited

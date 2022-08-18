@@ -6,12 +6,13 @@ A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into 
 ## Features [WIP]
 
 - [x] Monopoly bank functionality using a `chest` or a `barrel` in which game money items are placed and removed from
-- [x] Monopoly bank block breaking protection; game items consuming/placement protection
-- [ ] _Chance_ and _Community chest_ cards random cycle (shuffled card deck imitation)
+- [x] US, UK and RU localizations support
 - [x] Player balance tracking using a scoreboard
-- [ ] _Houses_ implementation using sea pickles (can be placed up to 4 four in a block)
+- [ ] _Chance_ and _Community chest_ cards randomization
+- [ ] _Houses_ implementation using sea pickles (can be placed up to four in a single block)
 - [ ] A book with links to get game items and a list and descriptions of all game properties
 - [x] Built-in dice randomizer
+- [x] Monopoly bank block breaking protection; game items consuming/placement protection
 - [x] Anti-counterfeiting game money items (default: `flint`, `coal`, `quartz`, `lapis_lazuli`, `iron_nugget`, `gold_nugget`, `emerald`) protection via [NBT data](https://minecraft.fandom.com/wiki/NBT_format)
 
 
@@ -68,8 +69,10 @@ Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/addition
 ## Reference
 
 - [PlugManX](https://github.com/TheBlackEntity/PlugMan) (also used during development)
-    - `README.md` structure
-    - Some code
+  - `README.md` structure
+  - Some code
+- [Monopoly Wiki](https://monopoly.fandom.com/wiki/Main_Page)
+  - Property names, _Chance_ and _Community chest_ cards for US and UK editions
 
 
 ## Special thanks to:

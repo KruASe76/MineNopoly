@@ -10,7 +10,7 @@ import me.kruase.minenopoly.Minenopoly.Companion.gameRunning
 import me.kruase.minenopoly.Minenopoly.Companion.gameData
 import me.kruase.minenopoly.Minenopoly.Companion.sendGlobalMessage
 import me.kruase.minenopoly.MinenopolyGameData as GameData
-import me.kruase.minenopoly.util.isStorage
+import me.kruase.minenopoly.util.*
 
 
 fun start(sender: Player, args: Array<out String>) {
@@ -41,12 +41,7 @@ fun start(sender: Player, args: Array<out String>) {
 
     sendGlobalMessage(
         mConfig.messages.info["game-started"]
-            ?.replace("{player}",
-                sender.playerListName.run {
-                    if (startsWith(ChatColor.COLOR_CHAR)) "$this${ChatColor.RESET}"
-                    else "${ChatColor.YELLOW}$this${ChatColor.RESET}"
-                }
-            )
+            ?.replace("{player}", getColoredName(sender.playerListName))
             ?.replace("{coordinates}", "${ChatColor.GREEN}[${coords[0]} ${coords[1]} ${coords[2]}]${ChatColor.RESET}")
             ?.replace("{dimension}", sender.world.environment.run {
                 when (this) {
