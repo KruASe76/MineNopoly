@@ -51,7 +51,7 @@ permissions:
         description: Allows to use §a/mp reload
         default: op
     minenopoly.admin:
-        description: Refers to §2minenopoly.finish.forced §rby default
+        description: Refers to §2minenopoly.reload §rand §2minenopoly.finish.forced §rby default
         default: op
         children:
             minenopoly.reload: true

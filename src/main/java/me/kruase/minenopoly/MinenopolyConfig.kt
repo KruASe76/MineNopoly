@@ -1,9 +1,9 @@
 package me.kruase.minenopoly
 
+import java.io.File
+import org.bukkit.plugin.Plugin
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.Material
-import org.bukkit.plugin.Plugin
-import java.io.File
 
 
 data class MinenopolyConfig(private val config: FileConfiguration) {
@@ -24,11 +24,11 @@ fun getMinenopolyConfig(plugin: Plugin): MinenopolyConfig {
             }
             else -> throw e
         }
-    }
+    }.also { plugin.logger.info("Config loaded!") }
 }
 
 fun newDefaultConfig(plugin: Plugin) {
-    plugin.logger.severe("Invalid Minenopoly config detected! Creating a new one (default)...")
+    plugin.logger.severe("Invalid MineNopoly config detected! Creating a new one (default)...")
     File(plugin.dataFolder, "config.yml").renameTo(
         File(plugin.dataFolder, "config.yml.old-${System.currentTimeMillis()}")
     )

@@ -27,7 +27,6 @@ class MinenopolyCommands : TabExecutor {
                 }
                 else -> listOf()
             }
-
             "start" -> when {
                 sender.hasPermission("minenopoly.start") -> when (sender) {
                     is Player -> targetBlockCompletion(sender, args.drop(1).toTypedArray())
@@ -64,20 +63,16 @@ class MinenopolyCommands : TabExecutor {
                                         null -> (1..3).map { it.toString() }
                                         else -> listOf()
                                     }
-
                                     else -> listOf()
                                 }
-
                                 "railroad" -> when (fullArgs.getOrNull(4)) {
                                     null -> (1..4).map { it.toString() }
                                     else -> listOf()
                                 }
-
                                 "utility" -> when (fullArgs.getOrNull(4)) {
                                     null -> listOf("electric", "water")
                                     else -> listOf()
                                 }
-
                                 else -> listOf()
                             }
                             else -> listOf()

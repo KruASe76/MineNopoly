@@ -44,8 +44,11 @@ _Note:_ Only available during the game.
 
 ## Configuration ([default](/src/main/resources/config.yml))
 
-- Game money items (it is also possible to specify denominations)
+- Game items (it is also possible to specify denominations for money)
 - Plugin messages [WIP]
+  - info
+  - error
+  - help
 
 
 ## Permissions
@@ -77,6 +80,6 @@ Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/addition
 
 ## Special thanks to:
 
-- [Legitimoose](https://www.youtube.com/c/Legitimoose) for amazing Paper (Bukkit) plugin (on Kotlin) project setup [tutorial](https://youtu.be/5DBJcz0ceaw)
+- [Legitimoose](https://www.youtube.com/c/Legitimoose) for amazing Paper (Bukkit) plugin (in Kotlin) project setup [tutorial](https://youtu.be/5DBJcz0ceaw)
 - [This portuguese guy](https://www.youtube.com/user/ReiDaViadagi) for showing me that I should add `kotlin-stdlib` to `plugin.yml`'s `libraries` section
 - [BeBr0](https://www.youtube.com/c/BeBr0) for Spigot (Bukkit) plugin development [tutorial [ru]](https://youtube.com/playlist?list=PLlLq-eYkh0bB_uyZN4NdzkxLBs9glZmIT) with very clear API explanation

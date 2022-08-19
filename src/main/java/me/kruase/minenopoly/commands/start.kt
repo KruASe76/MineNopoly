@@ -40,7 +40,7 @@ fun start(sender: Player, args: Array<out String>) {
     gameRunning = true
 
     sendGlobalMessage(
-        mConfig.messages.info["game-started"]
+        mConfig.messages.info["game-start"]
             ?.replace("{player}", getColoredName(sender.playerListName))
             ?.replace("{coordinates}", "${ChatColor.GREEN}[${coords[0]} ${coords[1]} ${coords[2]}]${ChatColor.RESET}")
             ?.replace("{dimension}", sender.world.environment.run {
@@ -48,7 +48,6 @@ fun start(sender: Player, args: Array<out String>) {
                     Environment.NORMAL -> "${ChatColor.GREEN}Overworld${ChatColor.RESET}"
                     Environment.NETHER -> "${ChatColor.RED}Nether${ChatColor.RESET}"
                     Environment.THE_END -> "${ChatColor.LIGHT_PURPLE}End${ChatColor.RESET}"
-                    Environment.CUSTOM -> "${ChatColor.YELLOW}[Custom dimension]${ChatColor.RESET}"
                 }
             })
     )

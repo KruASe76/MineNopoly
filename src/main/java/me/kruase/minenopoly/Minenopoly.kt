@@ -18,7 +18,7 @@ class Minenopoly : JavaPlugin() {
             if (message == null) return
             instance.server.onlinePlayers.forEach {
                 it.sendMessage(
-                    "${ChatColor.GOLD}[${ChatColor.GREEN}MineNopoly${ChatColor.GOLD}]${ChatColor.RESET} ${message}"
+                    "${ChatColor.GOLD}[${ChatColor.GREEN}MineNopoly${ChatColor.GOLD}]${ChatColor.RESET} $message"
                 )
             }
         }

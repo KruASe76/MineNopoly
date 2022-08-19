@@ -10,10 +10,10 @@ items:
     chance: minecraft:chorus_fruit
     community-chest: minecraft:diamond
 messages:
-    info: # To turn off certain messages lave the field empty (not empty quotes!)
-        game-started: '{player} started a game at {coordinates} in the {dimension}!'
-        game-finished: '{player} finished the game'
-        game-force-finished: '{player} §cforce§r-finished the game'
+    info: # To turn off certain messages leave the field empty (not empty quotes!)
+        game-start: '{player} started a game at {coordinates} in the {dimension}!'
+        game-finish: '{player} finished the game'
+        game-force-finish: '{player} §cforce§r-finished the game'
         add-money: '{player} added {n} to the bank'
         remove-money: '{player} removed {n} from the bank'
         remove-item: '{player} removed {item}'

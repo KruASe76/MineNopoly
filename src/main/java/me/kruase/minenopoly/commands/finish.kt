@@ -33,7 +33,7 @@ fun finish(sender: CommandSender, args: Array<out String>) {
                         it.scoreboard.update(it)
                     }
                     sendGlobalMessage(
-                        mConfig.messages.info["game-finished"]
+                        mConfig.messages.info["game-finish"]
                             ?.replace("{player}", getColoredName(
                                 when (sender) {
                                     is Player -> sender.playerListName
@@ -59,7 +59,7 @@ fun finish(sender: CommandSender, args: Array<out String>) {
                     it.scoreboard.update(it)
                 }
                 sendGlobalMessage(
-                    mConfig.messages.info["game-force-finished"]
+                    mConfig.messages.info["game-force-finish"]
                         ?.replace("{player}", getColoredName(
                             when (sender) {
                                 is Player -> sender.playerListName

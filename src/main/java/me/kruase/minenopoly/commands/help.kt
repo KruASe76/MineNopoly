@@ -12,8 +12,8 @@ fun help(sender: CommandSender, args: Array<out String>) {
     when (args.getOrNull(0)) {
         null -> mConfig.messages.help.keys
             .filter { sender.hasPermission("minenopoly.${it.replace("-", ".")}") || it == "header"}
-            .forEach { sender.sendMessage(mConfig.messages.help[it]) }
-        in mConfig.messages.help.keys - "header" -> sender.sendMessage(mConfig.messages.help[args[0]])
+            .forEach { sender.sendMessage(arrayOf(mConfig.messages.help[it])) }
+        in mConfig.messages.help.keys - "header" -> sender.sendMessage(arrayOf(mConfig.messages.help[args[0]]))
         else -> throw IllegalArgumentException()
     }
 }

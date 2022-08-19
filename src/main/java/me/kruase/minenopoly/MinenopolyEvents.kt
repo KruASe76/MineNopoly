@@ -76,7 +76,7 @@ class MinenopolyEvents : Listener {
 
     @EventHandler
     fun onHouseDropItem(event: BlockDropItemEvent) {
-        if (event.items[0].itemStack.type != Material.SEA_PICKLE || !event.player.isInGame()) return
+        if (event.items.getOrNull(0)?.itemStack?.type != Material.SEA_PICKLE || !event.player.isInGame()) return
         event.items[0].itemStack.apply { itemMeta = itemMeta!!
             .apply {
                 setDisplayName("${ChatColor.DARK_GREEN}${ChatColor.BOLD}House${ChatColor.RESET}")
