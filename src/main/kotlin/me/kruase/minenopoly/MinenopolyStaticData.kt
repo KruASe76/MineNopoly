@@ -3,7 +3,10 @@ package me.kruase.minenopoly
 import me.kruase.minenopoly.util.getMoneyItemName
 
 
-object MinenopolyData {
+object MinenopolyStaticData {
+    val totalHouses = 32
+    val totalHotels = 12
+
     val propertyTypes: List<String> = listOf(
         "street.brown.1", "street.brown.2",
         "street.blue.1", "street.blue.2",
@@ -15,7 +18,7 @@ object MinenopolyData {
         "street.green.1", "street.green.2", "street.green.3",
         "railroad.1", "railroad.2", "railroad.3", "railroad.4",
         "utility.electric", "utility.water"
-        )
+    )
 
     val propertyNames: Map<String, Map<String, String>> = mapOf(
         "us" to propertyTypes.zip(

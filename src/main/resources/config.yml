@@ -9,30 +9,37 @@ items:
         500: minecraft:emerald
     chance: minecraft:chorus_fruit
     community-chest: minecraft:diamond
-messages:
+messages: # Can be used to add translation
     info: # To turn off certain messages leave the field empty (not empty quotes!)
         game-start: '{player} started a game at {coordinates} in the {dimension}!'
         game-finish: '{player} finished the game'
         game-force-finish: '{player} §cforce§r-finished the game'
         add-money: '{player} added {n} to the bank'
+        add-item: '{player} added {item}'
         remove-money: '{player} removed {n} from the bank'
         remove-item: '{player} removed {item}'
+        houses-left: '{n} houses left in the bank!'
+        hotels-left: '{n} hotels left in the bank!'
+        dice: 'Dice: {a} {b}'
     error:
         no-permission: Not enough permissions to call this command!
         invalid-command: Invalid command!
         player-only: This command can only be called by a player!
         game-not-started: Game is not started!
         game-already-started: Game is already started on this server!
-        not-a-container: The bank block has to be either a chest or a barrel!
-        unable-to-finish-game: 'Unable to finish the game: not all game items returned! To force-finish call §a/mp finish forced'
+        not-a-container: The bank block has to be a chest, barrel, or any type of shulker box!
+        unable-to-finish-game: 'Unable to finish the game: not all game items have been returned! To force-finish call §a/mp finish forced'
         unable-to-add-item: Unable to add item to the inventory!
         not-enough-money: The bank contains less money than it is requested to remove!
+        property-already-in-game: This property is already in game!
+        no-houses-left: There are no more houses left! (Maximum of 32)
+        no-hotels-left: There are no more hotels left! (Maximum of 12)
     help: # Not intended to be edited
         header: §7-------- §6[§aMineNopoly§6] §7------------------------
-        help: §a/mp help [command] §r- Show help for given command, for available commands otherwise
-        start: §a/mp start <block> §r- Start the game with given block as the bank
-        finish: §a/mp finish §r- Finish the game and save the log file
-        finish-forced: §a/mp finish forced §r- Finish even if not all game items have been returned
-        book: §a/mp book §r- Get the book to use during the game
-        reload: §a/mp reload §r- Reload config
-        get: §a/mp get <args> §r- Auxiliary command used when clicking on links in the book
+        help: §a/mp §6help §a[command] §r- Show help for given command, for available commands otherwise
+        start: §a/mp §6start §a<block> §r- Start the game with given block as the bank
+        finish: §a/mp §6finish §r- Finish the game and save the log file
+        finish-forced: §a/mp §6finish forced §r- Finish even if not all game items have been returned
+        book: §a/mp §6book §r- Get the book to use during the game
+        reload: §a/mp §6reload §r- Reload config
+        get: §a/mp §6get §a<args> §r- Auxiliary command used when clicking on links in the book

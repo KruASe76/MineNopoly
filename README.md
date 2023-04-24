@@ -1,15 +1,19 @@
 # mine-nopoly
 
+![](https://img.shields.io/badge/MINECRAFT-1.16.3+-966C4A?style=for-the-badge&labelColor=53AC56)
+![](https://img.shields.io/badge/JAVA-1.8+-5283A2?style=for-the-badge&labelColor=E86F00)
+
 A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into the game.
 
 
 ## Features [WIP]
 
-- [x] Monopoly bank functionality using a `chest` or a `barrel` in which game money items are placed and removed from
+- [x] Monopoly bank functionality using a `chest`, `barrel` or any `shulker_box` in which game money items are placed and removed from
 - [x] US, UK and RU localizations support
 - [x] Player balance tracking using a scoreboard
 - [ ] _Chance_ and _Community chest_ cards randomization
-- [ ] _Houses_ implementation using sea pickles (can be placed up to four in a single block)
+- [x] _Houses_ implementation using sea pickles (can be placed up to four in a single block)
+- [x] _Hotels_ lantern blocks immediate breaking without tools
 - [ ] A book with links to get game items and a list and descriptions of all game properties
 - [x] Built-in dice randomizer
 - [x] Monopoly bank block breaking protection; game items consuming/placement protection
@@ -18,7 +22,15 @@ A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into 
 
 ## Usage
 
+### How to play?emptyList
+
+You just build a playing field, place a chest (can also be a barrel or a shulker box) somewhere and call `/mp start <chest coordinates>`!  
+To get and remove game items use [chat entries](#valid-in-game-chat-entries) and the book you can get via `/mp book <language>`.  
+_Houses_ and _Hotels_ are meant to be placed on street cells; all other items are meant not to be used in any way except keeping in the inventory and transferring between the players.  
+To finish the game return all the game items to the bank (and type `--` to remove them) and call `/mp finish`; if you can't return them one of the server operators (by default) should call `/mp finish forced`.
+
 ### Commands
+
 `/monopoly` is the main plugin command, which has the alias `/mp`.
 
 | Command              | Description                                                                  |
@@ -32,6 +44,7 @@ A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into 
 | `/mp get <args>`     | Auxiliary command used when clicking on links in the book                    |
 
 ### Valid in-game chat entries
+
 _Note:_ Only available during the game.
 
 | Chat entry  | Description                                                             |
@@ -52,6 +65,7 @@ _Note:_ Only available during the game.
 
 
 ## Permissions
+
 | Permission node            | Default | Description                                                             |
 |----------------------------|---------|-------------------------------------------------------------------------|
 | `minenopoly.help`          | true    | Allows to use `/mp help` (lists only available commands)                |
@@ -66,7 +80,7 @@ _Note:_ Only available during the game.
 
 ## Game field
 
-Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/additions/monopoly_field.litematic) of the game field designed by me, however, you can build your own!
+Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/additions/Monopoly_Field.litematic) of the game field designed by me, however, you can build your own!
 
 
 ## Reference
@@ -81,5 +95,10 @@ Here is a [litematica](https://github.com/KruASe76/mine-nopoly/raw/main/addition
 ## Special thanks to:
 
 - [Legitimoose](https://www.youtube.com/c/Legitimoose) for amazing Paper (Bukkit) plugin (in Kotlin) project setup [tutorial](https://youtu.be/5DBJcz0ceaw)
-- [This portuguese guy](https://www.youtube.com/user/ReiDaViadagi) for showing me that I should add `kotlin-stdlib` to `plugin.yml`'s `libraries` section
 - [BeBr0](https://www.youtube.com/c/BeBr0) for Spigot (Bukkit) plugin development [tutorial [ru]](https://youtube.com/playlist?list=PLlLq-eYkh0bB_uyZN4NdzkxLBs9glZmIT) with very clear API explanation
+
+## Copyright
+
+All the information about the original game used to develop this project was taken from open sources (mostly [Monopoly fandom wiki](https://monopoly.fandom.com/wiki/Main_Page)) and my personal experience.
+
+The project itself is distributed under [GNU GPLv3](./LICENSE).

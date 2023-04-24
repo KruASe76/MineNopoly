@@ -10,6 +10,6 @@ data class MinenopolyGameData(val bank: Container) {
     var housesInGame: Int = 0
     var hotelsInGame: Int = 0
 
-    val propertiesInGame: MutableMap<String, Boolean> = MinenopolyData.propertyTypes
+    val propertiesInGame: MutableMap<String, Boolean> = MinenopolyStaticData.propertyTypes
         .associateWith { false }.toMutableMap()
 }

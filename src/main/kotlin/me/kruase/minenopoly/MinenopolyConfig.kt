@@ -1,7 +1,6 @@
 package me.kruase.minenopoly
 
 import java.io.File
-import org.bukkit.plugin.Plugin
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.Material
 
@@ -11,34 +10,35 @@ data class MinenopolyConfig(private val config: FileConfiguration) {
     val messages = MessagesConfig(config)
 }
 
-fun getMinenopolyConfig(plugin: Plugin): MinenopolyConfig {
+
+fun Minenopoly.getUserConfig(): MinenopolyConfig {
     return try {
-        plugin.saveDefaultConfig()
-        plugin.reloadConfig()
-        MinenopolyConfig(plugin.config)
+        saveDefaultConfig()
+        reloadConfig()
+        MinenopolyConfig(config)
     } catch (e: Exception) {
         when (e) {
             is NullPointerException, is NumberFormatException -> {
-                newDefaultConfig(plugin)
-                MinenopolyConfig(plugin.config)
+                newDefaultConfig()
+                MinenopolyConfig(config)
             }
             else -> throw e
         }
-    }.also { plugin.logger.info("Config loaded!") }
+    }.also { logger.info("Config loaded!") }
 }
 
-fun newDefaultConfig(plugin: Plugin) {
-    plugin.logger.severe("Invalid MineNopoly config detected! Creating a new one (default)...")
-    File(plugin.dataFolder, "config.yml").renameTo(
-        File(plugin.dataFolder, "config.yml.old-${System.currentTimeMillis()}")
+fun Minenopoly.newDefaultConfig() {
+    logger.severe("Invalid $name config detected! Creating a new one (default)...")
+    File(dataFolder, "config.yml").renameTo(
+        File(dataFolder, "config.yml.old-${System.currentTimeMillis()}")
     )
-    plugin.saveDefaultConfig()
-    plugin.reloadConfig()
-    plugin.logger.info("New (default) config created!")
+    saveDefaultConfig()
+    reloadConfig()
+    logger.info("New (default) config created!")
 }
 
 
-// "materials" is more API-related name, when "item" is more user-friendly
+// "materials" is more API-related name, while "item" is more user-friendly
 data class MaterialsConfig(private val config: FileConfiguration) {
     val money: Map<Int, Material> = config.getConfigurationSection("items.money")!!
         .getKeys(false).sortedByDescending { it.toInt() }.associate {
