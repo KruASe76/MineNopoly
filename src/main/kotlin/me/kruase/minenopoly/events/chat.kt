@@ -1,11 +1,11 @@
 package me.kruase.minenopoly.events
 
-import org.bukkit.event.player.AsyncPlayerChatEvent
-import org.bukkit.ChatColor
-import me.kruase.minenopoly.Minenopoly.Companion.userConfig
 import me.kruase.minenopoly.Minenopoly.Companion.gameData
 import me.kruase.minenopoly.Minenopoly.Companion.sendGameMessage
+import me.kruase.minenopoly.Minenopoly.Companion.userConfig
 import me.kruase.minenopoly.util.*
+import org.bukkit.event.player.AsyncPlayerChatEvent
+import net.md_5.bungee.api.ChatColor as CC
 
 
 private const val diceSymbols = "①②③④⑤⑥"
@@ -20,7 +20,14 @@ fun chat(event: AsyncPlayerChatEvent) {
 
     when {
         event.message.matches(Regex("""\+\d+""")) -> {
-            val money: Int = event.message.drop(1).toInt()
+            val money: Int = try {
+                event.message.drop(1).toInt()
+            } catch (e: NumberFormatException) {
+                throw IllegalStateException(
+                    userConfig.messages.error["too-much-money"] ?: "Error: too-much-money"
+                )
+            }
+
             if (money == 0) return
 
             gameData.bank.inventory.money += money
@@ -28,8 +35,8 @@ fun chat(event: AsyncPlayerChatEvent) {
 
             sendGameMessage(
                 userConfig.messages.info["add-money"]
-                    ?.replace("{player}", getColoredName(event.player.playerListName))
-                    ?.replace("{n}", getMoneyItemName(money))
+                    ?.replace("{player}", coloredName(event.player.playerListName))
+                    ?.replace("{n}", asCurrency(money))
             )
         }
         event.message.matches(Regex("""-\d+""")) -> {
@@ -45,18 +52,18 @@ fun chat(event: AsyncPlayerChatEvent) {
 
             sendGameMessage(
                 userConfig.messages.info["remove-money"]
-                    ?.replace("{player}", getColoredName(event.player.playerListName))
-                    ?.replace("{n}", getMoneyItemName(money))
+                    ?.replace("{player}", coloredName(event.player.playerListName))
+                    ?.replace("{n}", asCurrency(money))
             )
         }
-        event.message == "--" -> {  // TODO: test this
+        event.message == "--" -> {
             gameData.bank.inventory.run {
                 if (money != 0) {
                     gameData.moneyInGame -= money
                     sendGameMessage(
                         userConfig.messages.info["remove-money"]
-                            ?.replace("{player}", getColoredName(event.player.playerListName))
-                            ?.replace("{n}", getMoneyItemName(money))
+                            ?.replace("{player}", coloredName(event.player.playerListName))
+                            ?.replace("{n}", asCurrency(money))
                     )
                     money = 0
                 }
@@ -65,18 +72,21 @@ fun chat(event: AsyncPlayerChatEvent) {
                 }.forEach {
                     it.itemMeta!!.persistentDataContainer.run {
                         when {
-                            hasMark("chance") -> gameData.chancesInGame--
-                            hasMark("community_chest") -> gameData.communityChestsInGame--
-                            hasMark("house") -> gameData.housesInGame--
-                            hasMark("hotel") -> gameData.hotelsInGame--
+                            hasMark("chance") -> gameData.chancesInGame -= it.amount
+                            hasMark("community_chest") -> gameData.communityChestsInGame -= it.amount
+                            hasMark("house") -> gameData.housesInGame -= it.amount
+                            hasMark("hotel") -> gameData.hotelsInGame -= it.amount
                             hasMark("property") -> gameData.propertiesInGame[getPropertyType()] = false
-                            else -> {}
+                            else -> throw IllegalStateException()  // should never occur
                         }
                     }
                     sendGameMessage(
                         userConfig.messages.info["remove-item"]
-                            ?.replace("{player}", getColoredName(event.player.playerListName))
-                            ?.replace("{item}", it.itemMeta!!.displayName)
+                            ?.replace("{player}", coloredName(event.player.playerListName))
+                            ?.replace(
+                                "{item}",
+                                it.itemMeta!!.displayName + (if (it.amount > 1) "${CC.RESET} ×${it.amount}" else "")
+                            )
                     )
                     remove(it)
                 }
@@ -84,18 +94,13 @@ fun chat(event: AsyncPlayerChatEvent) {
         }
         event.message == "?" -> {
             sendGameMessage(
-                "${ChatColor.BLUE}${
+                "${CC.BLUE}${
                     userConfig.messages.info["dice"]
-                        ?.replace("{a}", dice())
-                        ?.replace("{b}", dice())  
-                }${ChatColor.RESET}"
+                        ?.replace("{a}", diceSymbols.random().toString())
+                        ?.replace("{b}", diceSymbols.random().toString())  
+                }${CC.RESET}"
             )
         }
         else -> event.isCancelled = false
     }
-}
-
-
-fun dice(): String {
-    return diceSymbols.random().toString()
 }

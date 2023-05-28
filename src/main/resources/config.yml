@@ -28,8 +28,10 @@ messages: # Can be used to add translation
         game-not-started: Game is not started!
         game-already-started: Game is already started on this server!
         not-a-container: The bank block has to be a chest, barrel, or any type of shulker box!
+        standing-on-chest: When you are standing on a chest, Minecraft thinks you are inside instead ¯\_(ツ)_/¯
         unable-to-finish-game: 'Unable to finish the game: not all game items have been returned! To force-finish call §a/mp finish forced'
         unable-to-add-item: Unable to add item to the inventory!
+        too-much-money: Man, this exceeds java integer value limit, I'm sure you don't need so much...
         not-enough-money: The bank contains less money than it is requested to remove!
         property-already-in-game: This property is already in game!
         no-houses-left: There are no more houses left! (Maximum of 32)

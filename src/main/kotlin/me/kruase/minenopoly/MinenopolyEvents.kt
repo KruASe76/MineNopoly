@@ -1,22 +1,22 @@
 package me.kruase.minenopoly
 
-import org.bukkit.event.Listener
+import me.kruase.minenopoly.events.chat
+import me.kruase.minenopoly.util.*
+import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.bukkit.event.player.AsyncPlayerChatEvent
-import org.bukkit.event.inventory.InventoryCloseEvent
-import org.bukkit.event.player.PlayerDropItemEvent
-import org.bukkit.event.entity.EntityPickupItemEvent
+import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDamageEvent
 import org.bukkit.event.block.BlockDropItemEvent
-import org.bukkit.event.player.PlayerItemConsumeEvent
 import org.bukkit.event.block.BlockPlaceEvent
-import org.bukkit.entity.Player
-import org.bukkit.Material
+import org.bukkit.event.entity.EntityPickupItemEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.player.AsyncPlayerChatEvent
+import org.bukkit.event.player.PlayerDropItemEvent
+import org.bukkit.event.player.PlayerItemConsumeEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.ChatColor
-import me.kruase.minenopoly.events.*
-import me.kruase.minenopoly.util.*
+import net.md_5.bungee.api.ChatColor as CC
 
 
 class MinenopolyEvents : Listener {
@@ -25,8 +25,8 @@ class MinenopolyEvents : Listener {
         try {
             chat(event)
         } catch (e: IllegalStateException) {
-            // "Unknown error" should never occur
-            event.player.sendMessage("${ChatColor.RED}${e.message ?: "Unknown error"}")
+            event.player.sendMessage("${CC.RED}${e.message ?: "Unknown error"}")
+            // "Unknown error" should never be output
         }
     }
 
@@ -67,17 +67,34 @@ class MinenopolyEvents : Listener {
     }
 
     @EventHandler
+    fun onHouseDropItem(event: BlockDropItemEvent) {
+        if (
+            event.blockState.type != MSD.houseMaterial ||
+            !event.block.chunk.persistentDataContainer.hasItemName(event.block.location)
+        ) return
+        event.items[0].itemStack.apply {
+            itemMeta = itemMeta!!.apply {
+                setDisplayName(
+                    event.block.chunk.persistentDataContainer.getItemName(event.block.location)!! + CC.RESET
+                )
+                persistentDataContainer.addMark("house")
+            }
+        }
+        event.block.chunk.persistentDataContainer.removeItemName(event.block.location)
+    }
+
+    @EventHandler
     fun onHotelDamage(event: BlockDamageEvent) {
         if (
-            event.block.type != Material.LANTERN ||
+            event.block.type != MSD.hotelMaterial ||
             !event.block.chunk.persistentDataContainer.hasItemName(event.block.location)
         ) return
         event.block.type = Material.AIR
         event.block.location.run {
             world!!.dropItemNaturally(
                 this,
-                ItemStack(Material.LANTERN).apply { itemMeta = itemMeta!!
-                    .apply {
+                ItemStack(MSD.hotelMaterial).apply {
+                    itemMeta = itemMeta!!.apply {
                         setDisplayName(event.block.chunk.persistentDataContainer.getItemName(event.block.location)!!)
                         persistentDataContainer.addMark("hotel")
                     }
@@ -88,18 +105,12 @@ class MinenopolyEvents : Listener {
     }
 
     @EventHandler
-    fun onHouseDropItem(event: BlockDropItemEvent) {
+    fun onHeadDamage(event: BlockDamageEvent) {
         if (
-            event.blockState.block.type != Material.SEA_PICKLE ||
-            !event.block.chunk.persistentDataContainer.hasItemName(event.block.location)
+            event.block.type !in listOf(Material.PLAYER_HEAD, Material.PLAYER_WALL_HEAD) || !event.player.isInGame()
         ) return
-        event.items[0].itemStack.apply { itemMeta = itemMeta!!
-            .apply {
-                setDisplayName(event.block.chunk.persistentDataContainer.getItemName(event.block.location)!!)
-                persistentDataContainer.addMark("house")
-            }
-        }
-        event.block.chunk.persistentDataContainer.removeItemName(event.block.location)
+
+        event.block.breakNaturally()
     }
 
     @EventHandler
@@ -109,7 +120,7 @@ class MinenopolyEvents : Listener {
     }
 
     @EventHandler
-    fun onGameItemPlace(event: BlockPlaceEvent) {  // TODO: test this
+    fun onGameItemPlace(event: BlockPlaceEvent) {
         if (event.itemInHand.itemMeta?.persistentDataContainer
                 ?.run { hasAnyMark() && !hasMark("house") && !hasMark("hotel") } != true) return
         event.isCancelled = true

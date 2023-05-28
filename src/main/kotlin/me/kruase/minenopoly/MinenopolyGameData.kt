@@ -3,6 +3,9 @@ package me.kruase.minenopoly
 import org.bukkit.block.Container
 
 
+typealias MGD = MinenopolyGameData
+
+
 data class MinenopolyGameData(val bank: Container) {
     var moneyInGame: Int = 0
     var chancesInGame: Int = 0
@@ -10,6 +13,5 @@ data class MinenopolyGameData(val bank: Container) {
     var housesInGame: Int = 0
     var hotelsInGame: Int = 0
 
-    val propertiesInGame: MutableMap<String, Boolean> = MinenopolyStaticData.propertyTypes
-        .associateWith { false }.toMutableMap()
+    val propertiesInGame: MutableMap<String, Boolean> = MSD.propertyTypes.associateWith { false }.toMutableMap()
 }

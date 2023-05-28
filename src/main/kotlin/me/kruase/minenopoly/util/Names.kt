@@ -1,16 +1,18 @@
 package me.kruase.minenopoly.util
 
-import org.bukkit.ChatColor
+import net.md_5.bungee.api.ChatColor as CC
 
 
-fun getColoredName(name: String): String {
+fun coloredName(name: String, outerStyle: String = ""): String {
     return name.let {
-        if (it.startsWith(ChatColor.COLOR_CHAR)) "$it${ChatColor.RESET}"
-        else "${ChatColor.YELLOW}$it${ChatColor.RESET}"
+        if (it.startsWith(CC.COLOR_CHAR)) "$it${CC.RESET}$outerStyle"
+        else "${CC.YELLOW}$it${CC.RESET}$outerStyle"
     }
 }
 
 
-fun getMoneyItemName(cost: Int): String {
-    return "${ChatColor.GREEN}${ChatColor.STRIKETHROUGH}M${ChatColor.RESET}${ChatColor.GREEN}${cost}${ChatColor.RESET}"
+fun asCurrency(cost: Int, outerStyle: String = ""): String {
+    return "${CC.RESET}${CC.GREEN}${CC.STRIKETHROUGH}M" +
+            "${CC.RESET}${CC.GREEN}$cost" +
+            "${CC.RESET}$outerStyle"
 }

@@ -1,9 +1,9 @@
 package me.kruase.minenopoly.util
 
-import org.bukkit.inventory.Inventory
-import org.bukkit.inventory.ItemStack
 import me.kruase.minenopoly.Minenopoly.Companion.instance
 import me.kruase.minenopoly.Minenopoly.Companion.userConfig
+import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.ItemStack
 
 
 private const val key: String = "money"
@@ -26,9 +26,9 @@ var Inventory.money: Int
         userConfig.materials.money.forEach { (cost, material) ->
             val amount = value / cost
             addItem(
-                ItemStack(material, amount).apply { itemMeta = itemMeta!!
-                    .apply {
-                        setDisplayName(getMoneyItemName(cost))
+                ItemStack(material, amount).apply {
+                    itemMeta = itemMeta!!.apply {
+                        setDisplayName(asCurrency(cost))
                         persistentDataContainer.addMark(key)
                     }
                 }

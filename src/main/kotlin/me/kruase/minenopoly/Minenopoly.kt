@@ -1,9 +1,9 @@
 package me.kruase.minenopoly
 
+import me.kruase.minenopoly.util.isInGame
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scoreboard.Scoreboard
-import org.bukkit.ChatColor
-import me.kruase.minenopoly.util.isInGame
+import net.md_5.bungee.api.ChatColor as CC
 
 
 class Minenopoly : JavaPlugin() {
@@ -18,7 +18,7 @@ class Minenopoly : JavaPlugin() {
             if (message == null) return
             instance.server.onlinePlayers.forEach {
                 it.sendMessage(
-                    "${ChatColor.GOLD}[${ChatColor.GREEN}MineNopoly${ChatColor.GOLD}]${ChatColor.RESET} $message"
+                    "${CC.GOLD}[${CC.GREEN}${instance.name}${CC.GOLD}]${CC.RESET} $message"
                 )
             }
         }
@@ -27,7 +27,7 @@ class Minenopoly : JavaPlugin() {
             if (message == null) return
             instance.server.onlinePlayers.filter { it.isInGame() }.forEach {
                 it.sendMessage(
-                    "${ChatColor.GOLD}[${ChatColor.GREEN}MineNopoly${ChatColor.GOLD}]${ChatColor.RESET} $message"
+                    "${CC.GOLD}[${CC.GREEN}${instance.name}${CC.GOLD}]${CC.RESET} $message"
                 )
             }
         }
@@ -38,7 +38,7 @@ class Minenopoly : JavaPlugin() {
         userConfig = getUserConfig()
         scoreboard = MinenopolyScoreboard.new(server)
 
-        getCommand("monopoly")!!.setExecutor(MinenopolyCommands())
+        getCommand("minenopoly")!!.setExecutor(MinenopolyCommands())
 
         server.pluginManager.registerEvents(MinenopolyEvents(), instance)
     }

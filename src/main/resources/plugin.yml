@@ -7,7 +7,7 @@ authors: [ KruASe ]
 description: Implements Monopoly bank into Minecraft
 
 commands:
-    monopoly:
+    minenopoly:
         description: Main MineNopoly plugin command
         permission: minenopoly.help
         usage: |-

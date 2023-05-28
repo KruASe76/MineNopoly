@@ -1,14 +1,16 @@
 package me.kruase.minenopoly.commands
 
 import me.kruase.minenopoly.Minenopoly
+import me.kruase.minenopoly.Minenopoly.Companion.gameData
+import me.kruase.minenopoly.Minenopoly.Companion.instance
+import me.kruase.minenopoly.Minenopoly.Companion.sendGlobalMessage
+import me.kruase.minenopoly.Minenopoly.Companion.userConfig
+import me.kruase.minenopoly.update
+import me.kruase.minenopoly.util.coloredName
+import me.kruase.minenopoly.util.hasAnyMark
+import me.kruase.minenopoly.util.hasPluginPermission
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import me.kruase.minenopoly.Minenopoly.Companion.instance
-import me.kruase.minenopoly.Minenopoly.Companion.userConfig
-import me.kruase.minenopoly.Minenopoly.Companion.gameData
-import me.kruase.minenopoly.Minenopoly.Companion.sendGlobalMessage
-import me.kruase.minenopoly.update
-import me.kruase.minenopoly.util.*
 
 
 fun finish(sender: CommandSender, args: Array<out String>) {
@@ -24,8 +26,9 @@ fun finish(sender: CommandSender, args: Array<out String>) {
         null -> {
             when {
                 gameData.run {
-                    listOf(moneyInGame, chancesInGame, communityChestsInGame, housesInGame, hotelsInGame).all { it == 0 }
-                            && propertiesInGame.values.all { !it }
+                    listOf(
+                        moneyInGame, chancesInGame, communityChestsInGame, housesInGame, hotelsInGame
+                    ).all { it == 0 } && propertiesInGame.values.all { !it }
                 } -> {
                     Minenopoly.gameData = null
                     instance.server.onlinePlayers.forEach {
@@ -33,7 +36,7 @@ fun finish(sender: CommandSender, args: Array<out String>) {
                     }
                     sendGlobalMessage(
                         userConfig.messages.info["game-finish"]
-                            ?.replace("{player}", getColoredName(
+                            ?.replace("{player}", coloredName(
                                 when (sender) {
                                     is Player -> sender.playerListName
                                     else -> sender.name
@@ -58,7 +61,7 @@ fun finish(sender: CommandSender, args: Array<out String>) {
                 }
                 sendGlobalMessage(
                     userConfig.messages.info["game-force-finish"]
-                        ?.replace("{player}", getColoredName(
+                        ?.replace("{player}", coloredName(
                             when (sender) {
                                 is Player -> sender.playerListName
                                 else -> sender.name

@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.kruase</groupId>
-    <artifactId>mine-nopoly</artifactId>
-    <version>0.6</version>
+    <artifactId>MineNopoly</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>mine-nopoly</name>
+    <name>MineNopoly</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <kotlin.version>1.8.20</kotlin.version>
-        <mcApi.version>1.16.3</mcApi.version>
+        <kotlin.version>1.8.21</kotlin.version>
+        <mcApi.version>1.16</mcApi.version>
     </properties>
 
     <build>
@@ -78,7 +78,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>${mcApi.version}-R0.1-SNAPSHOT</version>
+            <version>1.16.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -1,8 +1,8 @@
 package me.kruase.minenopoly.commands
 
-import org.bukkit.command.CommandSender
 import me.kruase.minenopoly.Minenopoly.Companion.userConfig
 import me.kruase.minenopoly.util.hasPluginPermission
+import org.bukkit.command.CommandSender
 
 
 fun help(sender: CommandSender, args: Array<out String>) {

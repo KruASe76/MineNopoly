@@ -1,8 +1,8 @@
 package me.kruase.minenopoly
 
-import java.io.File
-import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.Material
+import org.bukkit.configuration.file.FileConfiguration
+import java.io.File
 
 
 data class MinenopolyConfig(private val config: FileConfiguration) {

@@ -1,12 +1,13 @@
 package me.kruase.minenopoly
 
-import org.bukkit.scoreboard.Scoreboard
-import org.bukkit.scoreboard.RenderType
-import org.bukkit.scoreboard.DisplaySlot
+import me.kruase.minenopoly.util.isInGame
+import me.kruase.minenopoly.util.money
 import org.bukkit.Server
-import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import me.kruase.minenopoly.util.*
+import org.bukkit.scoreboard.DisplaySlot
+import org.bukkit.scoreboard.RenderType
+import org.bukkit.scoreboard.Scoreboard
+import net.md_5.bungee.api.ChatColor as CC
 
 object MinenopolyScoreboard {
     fun new(server: Server): Scoreboard =
@@ -14,7 +15,7 @@ object MinenopolyScoreboard {
             registerNewObjective(
                 "money",
                 "dummy",
-                "${ChatColor.GREEN}MONEY",
+                "${CC.GREEN}MONEY",
                 RenderType.INTEGER
             ).apply { displaySlot = DisplaySlot.SIDEBAR }
         }

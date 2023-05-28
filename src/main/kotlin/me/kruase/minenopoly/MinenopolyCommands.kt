@@ -1,12 +1,12 @@
 package me.kruase.minenopoly
 
-import org.bukkit.command.TabExecutor
-import org.bukkit.command.CommandSender
-import org.bukkit.command.Command
-import org.bukkit.entity.Player
-import org.bukkit.ChatColor
 import me.kruase.minenopoly.commands.*
 import me.kruase.minenopoly.util.hasPluginPermission
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabExecutor
+import org.bukkit.entity.Player
+import net.md_5.bungee.api.ChatColor as CC
 
 
 private val playerOnlyCommands = setOf("start", "book", "get")
@@ -24,7 +24,7 @@ class MinenopolyCommands : TabExecutor {
             null -> Minenopoly.userConfig.messages.help.keys
                 .filter {
                     sender.hasPluginPermission(it.replace("-", "."))
-                } - "header" - "finish-forced" - if (sender !is Player) emptySet() else playerOnlyCommands
+                } - "header" - "finish-forced" - if (sender is Player) emptySet() else playerOnlyCommands
             "help" -> when {
                 sender.hasPluginPermission("help") -> when (fullArgs.getOrNull(1)) {
                     null -> Minenopoly.userConfig.messages.help.keys
@@ -60,7 +60,7 @@ class MinenopolyCommands : TabExecutor {
                     is Player -> when (fullArgs.getOrNull(1)) {
                         null -> listOf("us", "uk", "ru")
                         "us", "uk", "ru" -> when (fullArgs.getOrNull(2)) {
-                            null -> listOf("chance", "community_chest", "property", "house", "hotel")
+                            null -> listOf("chance", "community_chest", "house", "hotel", "property")
                             "property" -> when (fullArgs.getOrNull(3)) {
                                 null -> listOf("street", "railroad", "utility")
                                 "street" -> when (fullArgs.getOrNull(4)) {
@@ -80,7 +80,7 @@ class MinenopolyCommands : TabExecutor {
                                     else -> emptyList()
                                 }
                                 "utility" -> when (fullArgs.getOrNull(4)) {
-                                    null -> listOf("electric", "water")
+                                    null -> listOf("electricity", "water")
                                     else -> emptyList()
                                 }
                                 else -> emptyList()
@@ -113,15 +113,14 @@ class MinenopolyCommands : TabExecutor {
             }
         } catch (e: UnsupportedOperationException) {
             sender.sendMessage(
-                "${ChatColor.RED}${Minenopoly.userConfig.messages.error["no-permission"] ?: "Error: no-permission"}"
+                "${CC.RED}${Minenopoly.userConfig.messages.error["no-permission"] ?: "Error: no-permission"}"
             )
         } catch (e: IllegalArgumentException) {
             sender.sendMessage(
-                "${ChatColor.RED}${Minenopoly.userConfig.messages.error["invalid-command"] ?: "Error: invalid-command"}"
+                "${CC.RED}${Minenopoly.userConfig.messages.error["invalid-command"] ?: "Error: invalid-command"}"
             )
         } catch (e: IllegalStateException) {
-            // "Unknown error" should never happen
-            sender.sendMessage("${ChatColor.RED}${e.message ?: "Unknown error"}")
+            sender.sendMessage("${CC.RED}${e.message ?: "Unknown error"}")  // "Unknown error" should never be output
         }
 
         return true
@@ -131,7 +130,7 @@ class MinenopolyCommands : TabExecutor {
         when (sender) {
             is Player -> command(sender, args)
             else -> sender.sendMessage(
-                "${ChatColor.RED}${Minenopoly.userConfig.messages.error["player-only"] ?: "Error: player-only"}"
+                "${CC.RED}${Minenopoly.userConfig.messages.error["player-only"] ?: "Error: player-only"}"
             )
         }
     }

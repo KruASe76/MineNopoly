@@ -1,11 +1,11 @@
 package me.kruase.minenopoly.util
 
-import org.bukkit.persistence.PersistentDataContainer
-import org.bukkit.persistence.PersistentDataType
+import me.kruase.minenopoly.Minenopoly.Companion.instance
+import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
-import org.bukkit.Location
-import me.kruase.minenopoly.Minenopoly.Companion.instance
+import org.bukkit.persistence.PersistentDataContainer
+import org.bukkit.persistence.PersistentDataType
 
 
 private val stringType = PersistentDataType.STRING
@@ -39,24 +39,19 @@ fun PersistentDataContainer.getPropertyType(): String {
 
 // itemNames are stored in the chunk's PersistentDataContainer
 fun PersistentDataContainer.addItemName(item: ItemStack, location: Location) {
-    set(NamespacedKey(
-        instance,
-        "${location.blockX}_${location.blockY}_${location.blockZ}"
-    ), stringType, item.itemMeta!!.displayName)
+    set(
+        NamespacedKey(instance, "${location.blockX}_${location.blockY}_${location.blockZ}"),
+        stringType,
+        item.itemMeta!!.displayName
+    )
 }
 
 fun PersistentDataContainer.hasItemName(location: Location): Boolean {
-    return has(NamespacedKey(
-        instance,
-        "${location.blockX}_${location.blockY}_${location.blockZ}"
-    ), stringType)
+    return has(NamespacedKey(instance, "${location.blockX}_${location.blockY}_${location.blockZ}"), stringType)
 }
 
 fun PersistentDataContainer.getItemName(location: Location): String? {
-    return get(NamespacedKey(
-        instance,
-        "${location.blockX}_${location.blockY}_${location.blockZ}"
-    ), stringType)
+    return get(NamespacedKey(instance, "${location.blockX}_${location.blockY}_${location.blockZ}"), stringType)
 }
 
 fun PersistentDataContainer.removeItemName(location: Location) {

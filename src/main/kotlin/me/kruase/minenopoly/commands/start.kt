@@ -1,14 +1,17 @@
 package me.kruase.minenopoly.commands
 
-import org.bukkit.entity.Player
-import org.bukkit.block.Container
-import org.bukkit.World.Environment
-import org.bukkit.ChatColor
-import me.kruase.minenopoly.Minenopoly.Companion.userConfig
+import me.kruase.minenopoly.MGD
 import me.kruase.minenopoly.Minenopoly.Companion.gameData
 import me.kruase.minenopoly.Minenopoly.Companion.sendGlobalMessage
-import me.kruase.minenopoly.MinenopolyGameData as GameData
-import me.kruase.minenopoly.util.*
+import me.kruase.minenopoly.Minenopoly.Companion.userConfig
+import me.kruase.minenopoly.util.canBeBank
+import me.kruase.minenopoly.util.coloredName
+import me.kruase.minenopoly.util.hasPluginPermission
+import org.bukkit.Material
+import org.bukkit.World.Environment
+import org.bukkit.block.Container
+import org.bukkit.entity.Player
+import net.md_5.bungee.api.ChatColor as CC
 
 
 fun start(player: Player, args: Array<out String>) {
@@ -30,20 +33,25 @@ fun start(player: Player, args: Array<out String>) {
     }
 
     val block = player.world.getBlockAt(coords[0], coords[1], coords[2])
+
     if (!block.type.canBeBank()) throw IllegalStateException(
-        userConfig.messages.error["not-a-container"] ?: "Error: not-a-container"
+        if (  // easter egg
+            args.contentEquals(arrayOf("~", "~-1", "~")) &&
+            player.world.getBlockAt(player.location).type == Material.CHEST
+        ) userConfig.messages.error["standing-on-chest"] ?: "Error: standing-on-chest"
+        else userConfig.messages.error["not-a-container"] ?: "Error: not-a-container"
     )
 
-    gameData = GameData(block.state as Container)
+    gameData = MGD(block.state as Container)
 
     sendGlobalMessage(
         userConfig.messages.info["game-start"]
-            ?.replace("{player}", getColoredName(player.playerListName))
-            ?.replace("{coordinates}", "${ChatColor.GREEN}[${coords[0]} ${coords[1]} ${coords[2]}]${ChatColor.RESET}")
+            ?.replace("{player}", coloredName(player.playerListName))
+            ?.replace("{coordinates}", "${CC.GREEN}[${coords[0]} ${coords[1]} ${coords[2]}]${CC.RESET}")
             ?.replace("{dimension}", when (player.world.environment) {
-                Environment.NORMAL -> "${ChatColor.GREEN}Overworld${ChatColor.RESET}"
-                Environment.NETHER -> "${ChatColor.RED}Nether${ChatColor.RESET}"
-                Environment.THE_END -> "${ChatColor.LIGHT_PURPLE}End${ChatColor.RESET}"
+                Environment.NORMAL -> "${CC.GREEN}Overworld${CC.RESET}"
+                Environment.NETHER -> "${CC.RED}Nether${CC.RESET}"
+                Environment.THE_END -> "${CC.LIGHT_PURPLE}End${CC.RESET}"
             })
     )
 }
