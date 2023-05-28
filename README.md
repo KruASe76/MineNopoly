@@ -34,26 +34,26 @@ To finish the game return all the game items to the bank (and type `--` to remov
 
 `/minenopoly` is the main plugin command, which has the alias `/mp`.
 
-| Command              | Description                                                                  |
-|----------------------|------------------------------------------------------------------------------|
-| `/mp help [command]` | Show help for given command, for available commands otherwise                |
-| `/mp start <block>`  | Start the game (chat tracking, scoreboard, etc) with given block as the bank |
-| `/mp finish`         | Finish the game and save the log file                                        |
-| `/mp finish forced`  | Finish even if not all game items have been returned                         |
-| `/mp book`           | Get the book to use during the game                                          |
-| `/mp reload`         | Reload config                                                                |
-| `/mp get <args>`     | Auxiliary command used when clicking on links in the book                    |
+| Command              | Description                                                                   |
+|----------------------|-------------------------------------------------------------------------------|
+| `/mp help [command]` | Show help for given command, for available commands otherwise                 |
+| `/mp book <loc>`     | Get the book to use during the game                                           |
+| `/mp start <block>`  | Start the game (chat tracking, scoreboard, etc.) with given block as the bank |
+| `/mp finish`         | Finish the game                                                               |
+| `/mp finish forced`  | Finish even if not all game items have been returned                          |
+| `/mp reload`         | Reload config                                                                 |
+| `/mp get <args>`     | Auxiliary command used when clicking on links in the book                     |
 
 ### Valid in-game chat entries
 
 _Note:_ Only available during the game.
 
-| Chat entry  | Description                                                             |
-|-------------|-------------------------------------------------------------------------|
-| `+<number>` | Place given amount of game money into the bank                          |
-| `-<number>` | Remove given amount of game money from the bank (with change if needed) |
-| `--`        | Remove all items from the bank (used _Chance_ cards, sold properties)   |
-| `?`         | Roll the dice (two random numbers from 1 to 6)                          |
+| Chat entry  | Description                                                                    |
+|-------------|--------------------------------------------------------------------------------|
+| `+<number>` | Place given amount of game money into the bank                                 |
+| `-<number>` | Remove given amount of game money from the bank (with change if needed)        |
+| `--`        | Remove all game items from the bank (used action cards, sold properties, etc.) |
+| `?`         | Roll the dice (display two random numbers from 1 to 6)                         |
 
 
 ## Configuration ([default](/src/main/resources/config.yml))
@@ -71,10 +71,10 @@ _Note:_ Only available during the game.
 |----------------------------|---------|-------------------------------------------------------------------------|
 | `minenopoly.help`          | true    | Allows to use `/mp help` (lists only available commands)                |
 | `minenopoly.get`           | true    | Allows to use `/mp get` and chat entries (allows to play basically)     |
+| `minenopoly.book`          | true    | Allows to use `/mp book`                                                |
 | `minenopoly.start`         | true    | Allows to use `/mp start`                                               |
 | `minenopoly.finish`        | true    | Allows to use `/mp finish` (without `forced` argument)                  |
 | `minenopoly.finish.forced` | op      | Allows to use `/mp finish forced`                                       |
-| `minenopoly.book`          | true    | Allows to use `/mp book`                                                |
 | `minenopoly.reload`        | op      | Allows to use `/mp reload`                                              |
 | `minenopoly.admin`         | op      | Refers to `minenopoly.reload` and `minenopoly.finish.forced` by default |
 
