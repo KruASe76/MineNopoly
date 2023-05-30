@@ -21,31 +21,31 @@ commands:
             §a/<command> §6get §a<args> §r- Auxiliary command used when clicking on links in the book
             §cWARNING: §eCommands listed here might be unavailable for you, to get help for available commands run §a/<command> help
         aliases:
-            - mp
+            - mn
 
 permissions:
     minenopoly.help:
-        description: Allows to use §a/mp §6help §r(lists only available commands)
+        description: Allows to use §a/mn §6help §r(lists only available commands)
         default: true
     minenopoly.get:
-        description: Allows to use §a/mp §6get §rand chat entries (allows to play basically)
+        description: Allows to use §a/mn §6get §rand chat entries (allows to play basically)
         default: true
     minenopoly.start:
-        description: Allows to use §a/mp §6start
+        description: Allows to use §a/mn §6start
         default: true
     minenopoly.finish:
-        description: Allows to use §a/mp §6finish §r(without §aforced §rargument)
+        description: Allows to use §a/mn §6finish §r(without §aforced §rargument)
         default: true
     minenopoly.finish.forced:
-        description: Allows to use §a/mp §6finish forced
+        description: Allows to use §a/mn §6finish forced
         default: op
         children:
             minenopoly.finish: true
     minenopoly.book:
-        description: Allows to use §a/mp §6book
+        description: Allows to use §a/mn §6book
         default: true
     minenopoly.reload:
-        description: Allows to use §a/mp §6reload
+        description: Allows to use §a/mn §6reload
         default: op
     minenopoly.admin:
         description: Refers to §2minenopoly.reload §rand §2minenopoly.finish.forced §rby default

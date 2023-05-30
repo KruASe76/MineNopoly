@@ -49,28 +49,28 @@ fun book(player: Player, args: Array<out String>) {
                 ComponentBuilder("\n".repeat(3))
                     .append(
                         ComponentBuilder(loc.chanceName)
-                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mp get ${loc.literal} chance"))
+                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} chance"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
                     .append("\n\n")
                     .append(
                         ComponentBuilder(loc.communityChestName)
-                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mp get ${loc.literal} community_chest"))
+                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} community_chest"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
                     .append("\n\n\n")
                     .append(
                         ComponentBuilder(loc.houseName)
-                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mp get ${loc.literal} house"))
+                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} house"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
                     .append("\n\n")
                     .append(
                         ComponentBuilder(loc.hotelName)
-                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mp get ${loc.literal} hotel"))
+                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} hotel"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
@@ -85,7 +85,7 @@ fun book(player: Player, args: Array<out String>) {
                         .event(
                             ClickEvent(
                                 ClickEvent.Action.RUN_COMMAND,
-                                "/mp get ${loc.literal} property ${type.replace(".", " ")}"
+                                "/mn get ${loc.literal} property ${type.replace(".", " ")}"
                             )
                         )
                         .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))

@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionType
 import net.md_5.bungee.api.ChatColor as CC
 
 
-// mp get <loc> <item> [<property-type> [street-color] <index | name (for utility)>]
+// mn get <loc> <item> [<property-type> [street-color] <index | name (for utility)>]
 fun get(player: Player, args: Array<out String>) {
     if (!player.hasPluginPermission("get")) throw UnsupportedOperationException()
 

@@ -3,6 +3,10 @@
 ![](https://img.shields.io/badge/MINECRAFT-1.16.5+-966C4A?style=for-the-badge&labelColor=53AC56)
 ![](https://img.shields.io/badge/JAVA-1.8+-5283A2?style=for-the-badge&labelColor=E86F00)
 
+[Modrinth](https://modrinth.com/plugin/minenopoly) ·
+[SpigotMC](https://www.spigotmc.org/resources/minenopoly.110159/) ·
+[CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/minenopoly)
+
 A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into the game.
 
 
@@ -25,24 +29,24 @@ A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into 
 
 ### How to play?
 
-You just build a playing field, place a chest (can also be a barrel or a shulker box) somewhere and call `/mp start <chest coordinates>`!  
-To get and remove game items use [chat entries](#valid-in-game-chat-entries) and the book you can get via `/mp book <localization>`.  
+You just build a playing field, place a chest (can also be a barrel or a shulker box) somewhere and call `/mn start <chest coordinates>`!  
+To get and remove game items use [chat entries](#valid-in-game-chat-entries) and the book you can get via `/mn book <localization>`.  
 _Houses_ and _Hotels_ are meant to be placed on street cells; all other items are meant not to be used in any way except keeping in the inventory and transferring between the players.  
-To finish the game return all the game items to the bank (and type `--` to remove them) and call `/mp finish`; if you can't return them one of the server operators (by default) should call `/mp finish forced`.
+To finish the game return all the game items to the bank (and type `--` to remove them) and call `/mn finish`; if you can't return them one of the server operators (by default) should call `/mn finish forced`.
 
 ### Commands
 
-`/minenopoly` is the main plugin command, which has the alias `/mp`.
+`/minenopoly` is the main plugin command, which has the alias `/mn`.
 
 | Command              | Description                                                                   |
 |----------------------|-------------------------------------------------------------------------------|
-| `/mp help [command]` | Show help for given command, for available commands otherwise                 |
-| `/mp book <loc>`     | Get the book to use during the game                                           |
-| `/mp start <block>`  | Start the game (chat tracking, scoreboard, etc.) with given block as the bank |
-| `/mp finish`         | Finish the game                                                               |
-| `/mp finish forced`  | Finish even if not all game items have been returned                          |
-| `/mp reload`         | Reload config                                                                 |
-| `/mp get <args>`     | Auxiliary command used when clicking on links in the book                     |
+| `/mn help [command]` | Show help for given command, for available commands otherwise                 |
+| `/mn book <loc>`     | Get the book to use during the game                                           |
+| `/mn start <block>`  | Start the game (chat tracking, scoreboard, etc.) with given block as the bank |
+| `/mn finish`         | Finish the game                                                               |
+| `/mn finish forced`  | Finish even if not all game items have been returned                          |
+| `/mn reload`         | Reload config                                                                 |
+| `/mn get <args>`     | Auxiliary command used when clicking on links in the book                     |
 
 ### Valid in-game chat entries
 
@@ -69,19 +73,19 @@ _Note:_ Only available during the game.
 
 | Permission node            | Default | Description                                                             |
 |----------------------------|---------|-------------------------------------------------------------------------|
-| `minenopoly.help`          | true    | Allows to use `/mp help` (lists only available commands)                |
-| `minenopoly.get`           | true    | Allows to use `/mp get` and chat entries (allows to play basically)     |
-| `minenopoly.book`          | true    | Allows to use `/mp book`                                                |
-| `minenopoly.start`         | true    | Allows to use `/mp start`                                               |
-| `minenopoly.finish`        | true    | Allows to use `/mp finish` (without `forced` argument)                  |
-| `minenopoly.finish.forced` | op      | Allows to use `/mp finish forced`                                       |
-| `minenopoly.reload`        | op      | Allows to use `/mp reload`                                              |
+| `minenopoly.help`          | true    | Allows using `/mn help` (lists only available commands)                 |
+| `minenopoly.get`           | true    | Allows using `/mn get` and chat entries (allows to play basically)      |
+| `minenopoly.book`          | true    | Allows using `/mn book`                                                 |
+| `minenopoly.start`         | true    | Allows using `/mn start`                                                |
+| `minenopoly.finish`        | true    | Allows using `/mn finish` (without `forced` argument)                   |
+| `minenopoly.finish.forced` | op      | Allows using `/mn finish forced`                                        |
+| `minenopoly.reload`        | op      | Allows using `/mn reload`                                               |
 | `minenopoly.admin`         | op      | Refers to `minenopoly.reload` and `minenopoly.finish.forced` by default |
 
 
 ## Game field
 
-Here is a [litematica](https://github.com/KruASe76/MineNopoly/raw/main/additions/field.litematic) of the game field designed by me, however, you can always build your own!
+Here is a [litematica](https://github.com/KruASe76/MineNopoly/raw/main/additions/minenopoly_field.litematic) of the game field designed by me, however, you can always build your own!
 
 
 ## Reference
