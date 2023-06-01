@@ -62,6 +62,7 @@ _Note:_ Only available during the game.
 
 ## Configuration ([default](/src/main/resources/config.yml))
 
+- Game distance (see config file for explanation)
 - Game money items (also their denominations)
 - Plugin messages
   - info

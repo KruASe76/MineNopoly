@@ -11,8 +11,8 @@ fun coloredName(name: String, outerStyle: String = ""): String {
 }
 
 
-fun asCurrency(cost: Int, outerStyle: String = ""): String {
-    return "${CC.RESET}${CC.GREEN}${CC.STRIKETHROUGH}M" +
-            "${CC.RESET}${CC.GREEN}$cost" +
+fun asCurrency(amount: Int, outerStyle: String = "", negative: Boolean = false): String {
+    return "${CC.RESET}${if (negative) CC.RED else CC.GREEN}${CC.STRIKETHROUGH}M" +
+            "${CC.RESET}${if (negative) CC.RED else CC.GREEN}$amount" +
             "${CC.RESET}$outerStyle"
 }

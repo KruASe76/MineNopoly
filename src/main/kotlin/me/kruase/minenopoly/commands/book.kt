@@ -19,7 +19,7 @@ import net.md_5.bungee.api.ChatColor as CC
 
 private val colorFix = mapOf(
     Color(0x573114) to CC.DARK_RED,
-    Color(0x1983C4) to CC.BLUE,
+    Color(0x1983C4) to CC.DARK_AQUA,
     Color(0xD35D89) to CC.RED,
     Color(0xDE5800) to CC.GOLD,
     Color(0xA51515) to CC.DARK_RED,
@@ -46,34 +46,41 @@ fun book(player: Player, args: Array<out String>) {
             author = loc.bookAuthor
 
             spigot().addPage(
-                ComponentBuilder("\n".repeat(3))
+                ComponentBuilder("")
                     .append(
                         ComponentBuilder(loc.chanceName)
                             .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} chance"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
-                    .append("\n\n")
+                    .append("\n")
                     .append(
                         ComponentBuilder(loc.communityChestName)
                             .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} community_chest"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
-                    .append("\n\n\n")
+                    .append("\n\n")
                     .append(
                         ComponentBuilder(loc.houseName)
                             .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} house"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
-                    .append("\n\n")
+                    .append("\n")
                     .append(
                         ComponentBuilder(loc.hotelName)
                             .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mn get ${loc.literal} hotel"))
                             .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text(loc.bookHoverText)))
                             .create()
                     )
+                    .append(  // event reset is needed to fix price list title becoming hoverable and clickable
+                        ComponentBuilder("\n\n\n")
+                            .event(ClickEvent(ClickEvent.Action.RUN_COMMAND, ""))
+                            .event(HoverEvent(HoverEvent.Action.SHOW_TEXT, Text("")))
+                            .create()
+                    )
+                    .append(loc.bookPriceList)
                     .create()
             )
 

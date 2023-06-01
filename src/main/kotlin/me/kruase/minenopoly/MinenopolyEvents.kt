@@ -60,9 +60,11 @@ class MinenopolyEvents : Listener {
     @EventHandler
     fun onBuildingPlace(event: BlockPlaceEvent) {
         if (
-            event.itemInHand.itemMeta?.persistentDataContainer?.run { hasMark("house") || hasMark("hotel") } != true ||
-            !event.player.isInGame()
+            event.itemInHand.itemMeta?.persistentDataContainer?.run {
+                hasMark("house") || hasMark("hotel")
+            } != true
         ) return
+
         event.block.chunk.persistentDataContainer.addItemName(event.itemInHand, event.block.location)
     }
 

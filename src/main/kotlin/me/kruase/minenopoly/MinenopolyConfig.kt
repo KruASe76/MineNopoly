@@ -6,6 +6,7 @@ import java.io.File
 
 
 data class MinenopolyConfig(private val config: FileConfiguration) {
+    val gameDistance = config.getInt("game-distance", 16)
     val materials = MaterialsConfig(config)
     val messages = MessagesConfig(config)
 }

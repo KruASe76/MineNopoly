@@ -90,6 +90,15 @@ object MinenopolyStaticData {
                 "Contains links to get game-related items",
                 "and information about properties"
             ),
+            bookFirstPageNames = listOf(
+                "PRICE LIST" to 0,
+                "GAME START" to 13,
+                "GO PASS" to 21,
+                "INCOME TAX" to 14,
+                "LUXURY TAX" to 13,
+                "LEAVE THE JAIL" to 3,
+                "OR DOUBLE" to 27,
+            ),
 
             propertyNamesRaw = listOf(
                 "Mediterranean Avenue", "Baltic Avenue\n",
@@ -254,6 +263,15 @@ object MinenopolyStaticData {
                 "Contains links to get game-related items",
                 "and information about properties"
             ),
+            bookFirstPageNames = listOf(
+                "PRICE LIST" to 0,
+                "GAME START" to 13,
+                "GO PASS" to 21,
+                "INCOME TAX" to 14,
+                "LUXURY TAX" to 13,
+                "LEAVE THE JAIL" to 3,
+                "OR DOUBLE" to 27,
+            ),
 
             propertyNamesRaw = listOf(
                 "Old Kent Road\n", "Whitechapel Road\n",
@@ -417,6 +435,15 @@ object MinenopolyStaticData {
             bookItemLoreRaw = listOf(
                 "Содержит ссылки на получение игровых предметов",
                 "и информацию о собственностях"
+            ),
+            bookFirstPageNames = listOf(
+                "ПРАЙС-ЛИСТ" to 0,
+                "НАЧАЛО ИГРЫ" to 9,
+                "ПОЛЕ ВПЕРЁД" to 6,
+                "ПОДОХОД. НАЛОГ" to 2,
+                "СВЕРХНАЛОГ" to 12,
+                "ТЮРЬМА" to 23,
+                "ИЛИ ДУБЛЬ" to 26,
             ),
 
             propertyNamesRaw = listOf(
@@ -585,6 +612,7 @@ data class Localization(
     val bookName: String,
     val bookHoverText: String,
     private val bookItemLoreRaw: List<String>,
+    private val bookFirstPageNames: List<Pair<String, Int>>,  // в формате прайс-листа (формат здесь, и просто добавить в book.kt)
 
     private val propertyNamesRaw: List<String>,
 
@@ -598,6 +626,21 @@ data class Localization(
 
     val bookAuthor = "KruASe | ${Minenopoly.instance.name}"
     val bookItemLore = bookItemLoreRaw.map { "${Style.lore}$it${CC.RESET}" }
+    val bookPriceList = bookFirstPageNames.let {
+        listOf(
+            "${CC.GREEN}${it[0].first}:${CC.RESET}",
+            "${CC.DARK_AQUA}${it[1].first}${CC.RESET}${".".repeat(it[1].second)}${asCurrency(1500)}",
+            "${CC.DARK_PURPLE}${
+                it[2].first
+                    .replace("GO", "${CC.RED}${CC.BOLD}GO${CC.RESET}${CC.DARK_PURPLE}")
+                    .replace(" ВПЕРЁД", "${CC.RED}${CC.BOLD} ВПЕРЁД${CC.RESET}${CC.DARK_PURPLE}")
+            }${CC.RESET}${".".repeat(it[2].second)}${asCurrency(200)}",
+            "${CC.DARK_RED}${it[3].first}${CC.RESET}${".".repeat(it[3].second)}${asCurrency(200, negative = true)}",
+            "${CC.GOLD}${it[4].first}${CC.RESET}${".".repeat(it[4].second)}${asCurrency(100, negative = true)}",
+            "${CC.DARK_BLUE}${it[5].first}${CC.RESET}${".".repeat(it[5].second)}${asCurrency(50, negative = true)}",
+            "${CC.RESET}${".".repeat(it[6].second)}${CC.RED}(${it[6].first})${CC.RESET}"
+        ).joinToString("\n")
+    }
 
     val properties: Map<String, Property> = MSD.propertyTypes.zip(
         MSD.propertyTypes.mapIndexed { index, type ->
@@ -628,8 +671,10 @@ data class Localization(
                     when (literal) {
                         "us" -> when (logicalType) {
                             LPT.STREET -> listOf(
-                                "${CC.GREEN}COST${CC.RESET}..............................${asCurrency(it[0])}",
-                                "${CC.BLUE}BUILDING COST${CC.RESET}......${asCurrency(it[1])}",
+                                "${CC.GREEN}COST${CC.RESET}..............................${
+                                    asCurrency(it[0], negative = true)
+                                }",
+                                "${CC.BLUE}BUILDING COST${CC.RESET}......${asCurrency(it[1], negative = true)}",
                                 "${CC.GOLD}BASE RENT${CC.RESET}................${asCurrency(it[2])}",
                                 "${CC.LIGHT_PURPLE}COLOR SET${CC.RESET} ${CC.GOLD}RENT${CC.RESET}.." +
                                         asCurrency(it[3]),
@@ -644,10 +689,12 @@ data class Localization(
                                 "${CC.DARK_RED}HOTEL${CC.RESET} ${CC.GOLD}RENT${CC.RESET}............." +
                                         asCurrency(it[8]),
                                 "${CC.RED}MORTGAGE${CC.RESET}..................${asCurrency(it[9])}",
-                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[10])}",
+                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[10], negative = true)}",
                             )
                             LPT.RAILROAD -> listOf(
-                                "${CC.GREEN}COST${CC.RESET}..............................${asCurrency(it[0])}",
+                                "${CC.GREEN}COST${CC.RESET}..............................${
+                                    asCurrency(it[0], negative = true)
+                                }",
                                 "",
                                 "${CC.GOLD}RENT:${CC.RESET}",
                                 "1 ${CC.GRAY}OWNED${CC.RESET}......................${asCurrency(it[1])}",
@@ -656,24 +703,28 @@ data class Localization(
                                 "4 ${CC.GRAY}OWNED${CC.RESET}......................${asCurrency(it[4])}",
                                 "",
                                 "${CC.RED}MORTGAGE${CC.RESET}..................${asCurrency(it[5])}",
-                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[6])}",
+                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[6], negative = true)}",
                             )
                             else -> listOf(
-                                "${CC.GREEN}COST${CC.RESET}..............................${asCurrency(it[0])}",
+                                "${CC.GREEN}COST${CC.RESET}..............................${
+                                    asCurrency(it[0], negative = true)
+                                }",
                                 "",
                                 "${CC.GOLD}RENT:${CC.RESET}",
                                 "1 ${CC.BLUE}OWNED${CC.RESET}.................${CC.GREEN}DICE×${it[1]}${CC.RESET}",
                                 "2 ${CC.BLUE}OWNED${CC.RESET}.................${CC.GREEN}DICE×${it[2]}${CC.RESET}",
                                 "",
                                 "${CC.RED}MORTGAGE${CC.RESET}..................${asCurrency(it[3])}",
-                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[4])}",
+                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[4], negative = true)}",
                             )
                         }
 
                         "uk" -> when (logicalType) {
                             LPT.STREET -> listOf(
-                                "${CC.GREEN}COST${CC.RESET}..............................${asCurrency(it[0])}",
-                                "${CC.BLUE}BUILDING COST${CC.RESET}......${asCurrency(it[1])}",
+                                "${CC.GREEN}COST${CC.RESET}..............................${
+                                    asCurrency(it[0], negative = true)
+                                }",
+                                "${CC.BLUE}BUILDING COST${CC.RESET}......${asCurrency(it[1], negative = true)}",
                                 "${CC.GOLD}BASE RENT${CC.RESET}................${asCurrency(it[2])}",
                                 "${CC.LIGHT_PURPLE}COLOR SET${CC.RESET} ${CC.GOLD}RENT${CC.RESET}.." +
                                         asCurrency(it[3]),
@@ -688,10 +739,12 @@ data class Localization(
                                 "${CC.DARK_RED}HOTEL${CC.RESET} ${CC.GOLD}RENT${CC.RESET}............." +
                                         asCurrency(it[8]),
                                 "${CC.RED}MORTGAGE${CC.RESET}..................${asCurrency(it[9])}",
-                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[10])}",
+                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[10], negative = true)}",
                             )
                             LPT.RAILROAD -> listOf(
-                                "${CC.GREEN}COST${CC.RESET}..............................${asCurrency(it[0])}",
+                                "${CC.GREEN}COST${CC.RESET}..............................${
+                                    asCurrency(it[0], negative = true)
+                                }",
                                 "",
                                 "${CC.GOLD}RENT:${CC.RESET}",
                                 "1 ${CC.GRAY}OWNED${CC.RESET}......................${asCurrency(it[1])}",
@@ -700,24 +753,26 @@ data class Localization(
                                 "4 ${CC.GRAY}OWNED${CC.RESET}......................${asCurrency(it[4])}",
                                 "",
                                 "${CC.RED}MORTGAGE${CC.RESET}..................${asCurrency(it[5])}",
-                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[6])}",
+                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[6], negative = true)}",
                             )
                             else -> listOf(
-                                "${CC.GREEN}COST${CC.RESET}..............................${asCurrency(it[0])}",
+                                "${CC.GREEN}COST${CC.RESET}..............................${
+                                    asCurrency(it[0], negative = true)
+                                }",
                                 "",
                                 "${CC.GOLD}RENT:${CC.RESET}",
                                 "1 ${CC.BLUE}OWNED${CC.RESET}.................${CC.GREEN}DICE×${it[1]}${CC.RESET}",
                                 "2 ${CC.BLUE}OWNED${CC.RESET}.................${CC.GREEN}DICE×${it[2]}${CC.RESET}",
                                 "",
                                 "${CC.RED}MORTGAGE${CC.RESET}..................${asCurrency(it[3])}",
-                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[4])}",
+                                "${CC.GREEN}UNMORTGAGE${CC.RESET}............${asCurrency(it[4], negative = true)}",
                             )
                         }
 
                         "ru" -> when (logicalType) {
                             LPT.STREET -> listOf(
-                                "${CC.GREEN}СТОИМОСТЬ${CC.RESET}...............${asCurrency(it[0])}",
-                                "${CC.BLUE}ЦЕНА ЗДАНИЯ${CC.RESET}.........${asCurrency(it[1])}",
+                                "${CC.GREEN}СТОИМОСТЬ${CC.RESET}...............${asCurrency(it[0], negative = true)}",
+                                "${CC.BLUE}ЦЕНА ЗДАНИЯ${CC.RESET}.........${asCurrency(it[1], negative = true)}",
                                 "${CC.GOLD}БАЗОВАЯ РЕНТА${CC.RESET}....${asCurrency(it[2])}",
                                 "${CC.LIGHT_PURPLE}С КОМПЛЕКТОМ${CC.RESET}.......${asCurrency(it[3])}",
                                 "С 1` ${CC.DARK_GREEN}ДОМОМ${CC.RESET}...............${asCurrency(it[4])}",
@@ -726,10 +781,10 @@ data class Localization(
                                 "С 4` ${CC.DARK_GREEN}ДОМАМИ${CC.RESET}............${asCurrency(it[7])}",
                                 "С ${CC.DARK_RED}ОТЕЛЕМ${CC.RESET}...................${asCurrency(it[8])}",
                                 "${CC.RED}ЗАЛОЖИТЬ${CC.RESET}.................${asCurrency(it[9])}",
-                                "${CC.GREEN}ВЫКУПИТЬ${CC.RESET}.................${asCurrency(it[10])}",
+                                "${CC.GREEN}ВЫКУПИТЬ${CC.RESET}.................${asCurrency(it[10], negative = true)}",
                             )
                             LPT.RAILROAD -> listOf(
-                                "${CC.GREEN}СТОИМОСТЬ${CC.RESET}...............${asCurrency(it[0])}",
+                                "${CC.GREEN}СТОИМОСТЬ${CC.RESET}...............${asCurrency(it[0], negative = true)}",
                                 "",
                                 "${CC.GOLD}РЕНТА:${CC.RESET}",
                                 "С 1 ${CC.GRAY}ВОКЗАЛОМ${CC.RESET}........${asCurrency(it[1])}",
@@ -738,17 +793,17 @@ data class Localization(
                                 "С 4 ${CC.GRAY}ВОКЗАЛАМИ${CC.RESET}.....${asCurrency(it[4])}",
                                 "",
                                 "${CC.RED}ЗАЛОЖИТЬ${CC.RESET}.................${asCurrency(it[5])}",
-                                "${CC.GREEN}ВЫКУПИТЬ${CC.RESET}.................${asCurrency(it[6])}",
+                                "${CC.GREEN}ВЫКУПИТЬ${CC.RESET}.................${asCurrency(it[6], negative = true)}",
                             )
                             else -> listOf(
-                                "${CC.GREEN}СТОИМОСТЬ${CC.RESET}...............${asCurrency(it[0])}",
+                                "${CC.GREEN}СТОИМОСТЬ${CC.RESET}...............${asCurrency(it[0], negative = true)}",
                                 "",
                                 "${CC.GOLD}РЕНТА:${CC.RESET}",
                                 "С 1 ${CC.BLUE}СЕРВИСОМ${CC.RESET}.....${CC.GREEN}КУБ×${it[1]}${CC.RESET}",
                                 "С 2 ${CC.BLUE}СЕРВИСАМИ${CC.RESET}..${CC.GREEN}КУБ×${it[2]}${CC.RESET}",
                                 "",
                                 "${CC.RED}ЗАЛОЖИТЬ${CC.RESET}.................${asCurrency(it[3])}",
-                                "${CC.GREEN}ВЫКУПИТЬ${CC.RESET}.................${asCurrency(it[4])}",
+                                "${CC.GREEN}ВЫКУПИТЬ${CC.RESET}.................${asCurrency(it[4], negative = true)}",
                             )
                         }
 

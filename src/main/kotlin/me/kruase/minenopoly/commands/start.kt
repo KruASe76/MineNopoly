@@ -52,6 +52,7 @@ fun start(player: Player, args: Array<out String>) {
                 Environment.NORMAL -> "${CC.GREEN}Overworld${CC.RESET}"
                 Environment.NETHER -> "${CC.RED}Nether${CC.RESET}"
                 Environment.THE_END -> "${CC.LIGHT_PURPLE}End${CC.RESET}"
+                else -> "${CC.DARK_AQUA}${player.world.name}${CC.RESET}"
             })
     )
 }

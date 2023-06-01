@@ -1,3 +1,7 @@
+# distance (in blocks) from the bank within which the player is considered a game participant
+# (shows up in the scoreboard, is allowed to use chat entries, receives game messages)
+# they are considered such anyway if they have a game item in their inventory
+game-distance: 16
 items:
     money: # You can specify both items and denominations
         1: minecraft:flint
