@@ -47,7 +47,7 @@ class MinenopolyCommands : TabExecutor {
             "book" -> when {
                 sender.hasPluginPermission("book") -> when (sender) {
                     is Player -> when (fullArgs.getOrNull(1)) {
-                        null -> listOf("us", "uk", "ru")
+                        null -> MSD.localizations.keys.toList()
                         else -> emptyList()
                     }
 
@@ -58,8 +58,8 @@ class MinenopolyCommands : TabExecutor {
             "get" -> when {
                 sender.hasPluginPermission("get") -> when (sender) {
                     is Player -> when (fullArgs.getOrNull(1)) {
-                        null -> listOf("us", "uk", "ru")
-                        "us", "uk", "ru" -> when (fullArgs.getOrNull(2)) {
+                        null -> MSD.localizations.keys.toList()
+                        in MSD.localizations.keys -> when (fullArgs.getOrNull(2)) {
                             null -> listOf("chance", "community_chest", "house", "hotel", "property")
                             "property" -> when (fullArgs.getOrNull(3)) {
                                 null -> listOf("street", "railroad", "utility")

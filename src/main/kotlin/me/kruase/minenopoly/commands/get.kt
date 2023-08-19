@@ -19,7 +19,7 @@ import net.md_5.bungee.api.ChatColor as CC
 fun get(player: Player, args: Array<out String>) {
     if (!player.hasPluginPermission("get")) throw UnsupportedOperationException()
 
-    if (args.size < 2 || args[0] !in listOf("us", "uk", "ru")) throw IllegalArgumentException()
+    if (args.size < 2 || args[0] !in MSD.localizations.keys) throw IllegalArgumentException()
 
     val gameData = gameData ?: throw IllegalStateException(
         userConfig.messages.error["game-not-started"] ?: "Error: game-not-started"
@@ -39,7 +39,7 @@ fun get(player: Player, args: Array<out String>) {
         }
         "house" -> {
             if (args.size != 2) throw IllegalArgumentException()
-            if (gameData.housesInGame == MSD.totalHouses) throw IllegalStateException(
+            if (gameData.housesInGame == MSD.TOTAL_HOUSES) throw IllegalStateException(
                 userConfig.messages.error["no-houses-left"] ?: "Error: no-houses-left"
             )
             gameData.housesInGame++
@@ -47,7 +47,7 @@ fun get(player: Player, args: Array<out String>) {
         }
         "hotel" -> {
             if (args.size != 2) throw IllegalArgumentException()
-            if (gameData.hotelsInGame == MSD.totalHotels) throw IllegalStateException(
+            if (gameData.hotelsInGame == MSD.TOTAL_HOTELS) throw IllegalStateException(
                 userConfig.messages.error["no-hotels-left"] ?: "Error: no-hotels-left"
             )
             gameData.hotelsInGame++
@@ -83,13 +83,13 @@ fun get(player: Player, args: Array<out String>) {
             if (persistentDataContainer.hasMark("house")) sendGameMessage(
                 userConfig.messages.info["houses-left"]
                     ?.replace(
-                        "{n}", coloredName((MSD.totalHouses - gameData.housesInGame).toString())
+                        "{n}", coloredName((MSD.TOTAL_HOUSES - gameData.housesInGame).toString())
                     )
             )
             if (persistentDataContainer.hasMark("hotel")) sendGameMessage(
                 userConfig.messages.info["hotels-left"]
                     ?.replace(
-                        "{n}", coloredName((MSD.totalHotels - gameData.hotelsInGame).toString())
+                        "{n}", coloredName((MSD.TOTAL_HOTELS - gameData.hotelsInGame).toString())
                     )
             )
         }
@@ -101,42 +101,40 @@ fun item(name: String, loc: String): ItemStack {
     return when (name) {
         "chance" -> ItemStack(userConfig.materials.chance).apply {
             itemMeta = itemMeta!!.apply {
-                setDisplayName(MSD.loc[loc]!!.chanceName)
-                lore = MSD.loc[loc]!!.chances.random()
+                setDisplayName(MSD.localizations[loc]!!.chanceName)
+                lore = MSD.localizations[loc]!!.chances.random()
 
                 persistentDataContainer.addMark("chance")
             }
         }
         "community_chest" -> ItemStack(userConfig.materials.communityChest).apply {
             itemMeta = itemMeta!!.apply {
-                setDisplayName(MSD.loc[loc]!!.communityChestName)
-                lore = MSD.loc[loc]!!.communityChests.random()
+                setDisplayName(MSD.localizations[loc]!!.communityChestName)
+                lore = MSD.localizations[loc]!!.communityChests.random()
 
                 persistentDataContainer.addMark("community_chest")
             }
         }
         "house" -> ItemStack(MSD.houseMaterial).apply {
             itemMeta = itemMeta!!.apply {
-                setDisplayName(MSD.loc[loc]!!.houseName)
+                setDisplayName(MSD.localizations[loc]!!.houseName)
 
                 persistentDataContainer.addMark("house")
             }
         }
         "hotel" -> ItemStack(MSD.hotelMaterial).apply {
             itemMeta = itemMeta!!.apply {
-                setDisplayName(MSD.loc[loc]!!.hotelName)
+                setDisplayName(MSD.localizations[loc]!!.hotelName)
 
                 persistentDataContainer.addMark("hotel")
             }
         }
         else -> run {  // property type
             val args = name.split(".")  // "name" here is property type
-            val logicalType = when {
-                args[0] == "street" -> LPT.STREET
-                args[0] == "railroad" -> LPT.RAILROAD
-                args[1] == "electricity" -> LPT.ELECTRICITY
-                args[1] == "water" -> LPT.WATER
-                else -> throw IllegalArgumentException()  // should never occur
+            val logicalType = try {
+                LPT.valueOf(args[0].uppercase())
+            } catch (e: IllegalArgumentException) {
+                LPT.valueOf(args[1].uppercase())
             }
 
             ItemStack(
@@ -152,7 +150,7 @@ fun item(name: String, loc: String): ItemStack {
                 itemMeta = itemMeta!!.apply {
                     if (this is PotionMeta) basePotionData = PotionData(PotionType.WATER)
 
-                    MSD.loc[loc]!!.properties[name]!!.let {  // "name" here is property type
+                    MSD.localizations[loc]!!.properties[name]!!.let {  // "name" here is property type
                         setDisplayName(it.name)
                         lore = it.description
                     }

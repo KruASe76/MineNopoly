@@ -21,10 +21,9 @@ var Inventory.money: Int
             }.toTypedArray()
         )
 
-        @Suppress("NAME_SHADOWING")
-        var value = value
+        var mutableValue = value
         userConfig.materials.money.forEach { (cost, material) ->
-            val amount = value / cost
+            val amount = mutableValue / cost
             addItem(
                 ItemStack(material, amount).apply {
                     itemMeta = itemMeta!!.apply {
@@ -40,6 +39,6 @@ var Inventory.money: Int
                         )
                 }
             }
-            value %= cost
+            mutableValue %= cost
         }
     }

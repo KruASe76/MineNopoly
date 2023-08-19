@@ -32,10 +32,10 @@ private val colorFix = mapOf(
 fun book(player: Player, args: Array<out String>) {
     if (!player.hasPluginPermission("book")) throw UnsupportedOperationException()
 
-    if (args.isEmpty() || args[0] !in listOf("us", "uk", "ru")) throw IllegalArgumentException()
+    if (args.isEmpty() || args[0] !in MSD.localizations.keys) throw IllegalArgumentException()
 
 
-    val loc = MSD.loc[args[0]]!!
+    val loc = MSD.localizations[args[0]]!!
 
     ItemStack(Material.WRITTEN_BOOK).apply {
         itemMeta = (itemMeta as BookMeta).apply {

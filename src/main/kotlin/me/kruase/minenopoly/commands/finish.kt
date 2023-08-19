@@ -50,7 +50,7 @@ fun finish(sender: CommandSender, args: Array<out String>) {
             }
         }
         "forced" -> when {
-            (sender.hasPluginPermission("finish.forced")) -> {
+            sender.hasPluginPermission("finish.forced") -> {
                 Minenopoly.gameData = null
                 instance.server.onlinePlayers.forEach { player ->
                     player.inventory.run {
