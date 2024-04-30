@@ -8,7 +8,6 @@ import me.kruase.minenopoly.Minenopoly.Companion.userConfig
 import me.kruase.minenopoly.util.*
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionType
@@ -149,7 +148,6 @@ fun item(name: String, loc: String): ItemStack {
             ).apply {
                 itemMeta = itemMeta!!.apply {
                     if (this is PotionMeta) basePotionType = PotionType.WATER
-                    itemFlags.add(ItemFlag.HIDE_POTION_EFFECTS).also { println("fuck") }
 
                     MSD.localizations[loc]!!.properties[name]!!.let {  // "name" here is property type
                         setDisplayName(it.name)

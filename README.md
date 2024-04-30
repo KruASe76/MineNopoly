@@ -14,7 +14,7 @@ A Spigot (Bukkit) Minecraft plugin that implements automated Monopoly bank into 
 
 - Monopoly bank functionality using a `chest`, `barrel` or any `shulker_box` in which game items are placed and removed from
 - US, UK and RU game localizations support
-- Player balance tracking using a scoreboard
+- Player balance tracking using a scoreboard (with player name transformation support)
 - _Chance_ and _Community chest_ cards randomization
 - _Houses_ implementation using `sea_pickles` (can be placed up to four in a single block)
 - _Hotels_ `lantern` blocks immediate breaking without tools
@@ -60,10 +60,11 @@ _Note:_ Only available during the game.
 | `?`         | Roll the dice (display two random numbers from 1 to 6)                         |
 
 
-## Configuration ([default](/src/main/resources/config.yml))
+## Configuration ([default config file](/src/main/resources/config.yml))
 
-- Game distance (see config file for explanation)
+- Game distance
 - Game money items (also their denominations)
+- Scoreboard player name display settings
 - Plugin messages
   - info
   - error
