@@ -25,7 +25,7 @@ class Minenopoly : JavaPlugin() {
 
         fun sendGameMessage(message: String?) {
             if (message == null) return
-            instance.server.onlinePlayers.filter { it.isInGame() }.forEach {
+            instance.server.onlinePlayers.filter { it.isInGame }.forEach {
                 it.sendMessage(
                     "${CC.GOLD}[${CC.GREEN}${instance.name}${CC.GOLD}]${CC.RESET} $message"
                 )

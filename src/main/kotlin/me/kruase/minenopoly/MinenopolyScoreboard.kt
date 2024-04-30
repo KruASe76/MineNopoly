@@ -38,7 +38,7 @@ fun Scoreboard.update(player: Player) {
                         it.multipleReplace(userConfig.scoreboard.nameReplaceMap, true)
                 }
 
-        when (isInGame()) {
+        when (isInGame) {
             true -> {
                 getObjective("money")!!
                     .getScore(entryName)

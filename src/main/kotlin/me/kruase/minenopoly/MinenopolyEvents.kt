@@ -109,7 +109,7 @@ class MinenopolyEvents : Listener {
     @EventHandler
     fun onHeadDamage(event: BlockDamageEvent) {
         if (
-            event.block.type !in listOf(Material.PLAYER_HEAD, Material.PLAYER_WALL_HEAD) || !event.player.isInGame()
+            event.block.type !in listOf(Material.PLAYER_HEAD, Material.PLAYER_WALL_HEAD) || !event.player.isInGame
         ) return
 
         event.block.breakNaturally()

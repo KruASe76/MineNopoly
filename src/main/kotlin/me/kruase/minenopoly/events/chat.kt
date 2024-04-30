@@ -13,7 +13,7 @@ private const val diceSymbols = "①②③④⑤⑥"
 
 fun chat(event: AsyncPlayerChatEvent) {
     val gameData = gameData ?: return
-    if (!event.player.isInGame()) return
+    if (!event.player.isInGame) return
     if (!event.player.hasPluginPermission("get")) return
 
     event.isCancelled = true

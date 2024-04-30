@@ -3,15 +3,17 @@ package me.kruase.minenopoly
 import org.bukkit.Material
 import org.bukkit.configuration.file.FileConfiguration
 import java.io.File
+import kotlin.math.pow
 
 
-// "materials" is more API-related name, while "item" is more user-friendly
 data class MinenopolyConfig(private val config: FileConfiguration) {
-    val gameDistance = config.getInt("game-distance", 16)
+    val gameDistanceSquared = config.getDouble("game-distance", 16.0).pow(2)
     val materials = MaterialsConfig(config, "items")
     val scoreboard = ScoreboardConfig(config, "scoreboard")
     val messages = MessagesConfig(config, "messages")
 }
+// squared to speed up computation
+// "materials" is more API-related name, while "item" is more user-friendly
 
 
 fun Minenopoly.getUserConfig(): MinenopolyConfig {
