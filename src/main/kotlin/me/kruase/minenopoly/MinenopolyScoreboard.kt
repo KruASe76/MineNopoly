@@ -6,6 +6,7 @@ import me.kruase.minenopoly.util.money
 import me.kruase.minenopoly.util.multipleReplace
 import org.bukkit.Server
 import org.bukkit.entity.Player
+import org.bukkit.scoreboard.Criteria
 import org.bukkit.scoreboard.DisplaySlot
 import org.bukkit.scoreboard.RenderType
 import org.bukkit.scoreboard.Scoreboard
@@ -18,7 +19,7 @@ object MinenopolyScoreboard {
             .apply {
                 registerNewObjective(
                     "money",
-                    "dummy",
+                    Criteria.DUMMY,
                     "${CC.GREEN}MONEY",
                     RenderType.INTEGER
                 )
