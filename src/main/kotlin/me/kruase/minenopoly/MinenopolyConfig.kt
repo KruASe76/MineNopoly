@@ -5,10 +5,12 @@ import org.bukkit.configuration.file.FileConfiguration
 import java.io.File
 
 
+// "materials" is more API-related name, while "item" is more user-friendly
 data class MinenopolyConfig(private val config: FileConfiguration) {
     val gameDistance = config.getInt("game-distance", 16)
-    val materials = MaterialsConfig(config)
-    val messages = MessagesConfig(config)
+    val materials = MaterialsConfig(config, "items")
+    val scoreboard = ScoreboardConfig(config, "scoreboard")
+    val messages = MessagesConfig(config, "messages")
 }
 
 
@@ -39,21 +41,30 @@ fun Minenopoly.newDefaultConfig() {
 }
 
 
-// "materials" is more API-related name, while "item" is more user-friendly
-data class MaterialsConfig(private val config: FileConfiguration) {
-    val money: Map<Int, Material> = config.getConfigurationSection("items.money")!!
+data class MaterialsConfig(private val config: FileConfiguration, private val prefix: String) {
+    val money: Map<Int, Material> = config.getConfigurationSection("$prefix.money")!!
         .getKeys(false).sortedByDescending { it.toInt() }.associate {
-            it.toInt() to Material.matchMaterial(config.getString("items.money.$it")!!)!!
+            it.toInt() to Material.matchMaterial(config.getString("$prefix.money.$it")!!)!!
         }
-    val chance: Material = Material.matchMaterial(config.getString("items.chance")!!)!!
-    val communityChest: Material = Material.matchMaterial(config.getString("items.community-chest")!!)!!
+    val chance: Material = Material.matchMaterial(config.getString("$prefix.chance")!!)!!
+    val communityChest: Material = Material.matchMaterial(config.getString("$prefix.community-chest")!!)!!
 }
 
-data class MessagesConfig(private val config: FileConfiguration) {
-    val help: Map<String, String> = config.getConfigurationSection("messages.help")!!
-        .getKeys(false).associateWith { config.getString("messages.help.$it")!! }
-    val error: Map<String, String> = config.getConfigurationSection("messages.error")!!
-        .getKeys(false).associateWith { config.getString("messages.error.$it")!! }
-    val info: Map<String, String> = config.getConfigurationSection("messages.info")!!
-        .getKeys(false).associateWith { config.getString("messages.info.$it")!! }
+data class ScoreboardConfig(private val config: FileConfiguration, private val prefix: String) {
+    val useDisplayName: Boolean = config.getBoolean("$prefix.use-display-name")
+    @Suppress("UNCHECKED_CAST")
+    val nameReplaceMap: Map<Regex, String> =
+        (config.getMapList("$prefix.name-replace-map") as? List<Map<String, String>>?)
+            ?.associate { map -> Regex(map["old"]!!) to map["new"]!! }
+            ?: emptyMap()
+    val nameReplaceExclusions: List<String> = config.getStringList("$prefix.name-replace-map-exclusions")
+}
+
+data class MessagesConfig(private val config: FileConfiguration, private val prefix: String) {
+    val help: Map<String, String> = config.getConfigurationSection("$prefix.help")!!
+        .getKeys(false).associateWith { config.getString("$prefix.help.$it")!! }
+    val error: Map<String, String> = config.getConfigurationSection("$prefix.error")!!
+        .getKeys(false).associateWith { config.getString("$prefix.error.$it")!! }
+    val info: Map<String, String> = config.getConfigurationSection("$prefix.info")!!
+        .getKeys(false).associateWith { config.getString("$prefix.info.$it")!! }
 }

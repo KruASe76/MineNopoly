@@ -1,9 +1,12 @@
 # distance (in blocks) from the bank within which the player is considered a game participant
 # (shows up in the scoreboard, is allowed to use chat entries, receives game messages)
-# they are considered such anyway if they have a game item in their inventory
+# note: they are considered such anyway if they have a game item in their inventory
 game-distance: 16
+
+# item ids to be used as game items
 items:
-    money: # You can specify both items and denominations
+    # both items and denominations can be specified
+    money:
         1: minecraft:flint
         5: minecraft:coal
         10: minecraft:quartz
@@ -11,10 +14,32 @@ items:
         50: minecraft:iron_nugget
         100: minecraft:gold_nugget
         500: minecraft:emerald
+        # example of custom amount-item pair:
+        # 4269: minecraft:wet_sponge
     chance: minecraft:chorus_fruit
     community-chest: minecraft:diamond
-messages: # Can be used to add translation
-    info: # To turn off certain messages leave the field empty (not empty quotes!)
+
+# game scoreboard settings
+scoreboard:
+    # whether to use the name that is shown in tab-menu (this may include colors, group prefixes, etc.)
+    # plain player nickname is used by default
+    use-display-name: false
+    # old-new pairs to perform replacement before displaying player names as a game scoreboard entry
+    # (supports regular expressions, most likely color-code-sensitive)
+    name-replace-map: # type: list of nodes with two keys: "old" and "new"
+        # example: remove prefix in square brackets
+        # - old: '^\[\w+\] '
+        #   new: ''
+    # player names (exact) to not be transformed by replacements
+    name-replace-map-exclusions: # type: list of strings
+        # example:
+        # - KruASe
+        # - KruASe_2
+
+# plugin messages, can be used to add translation
+messages:
+    # to turn off certain info messages leave the field empty (not empty quotes!)
+    info:
         game-start: '{player} started a game at {coordinates} in the {dimension}!'
         game-finish: '{player} finished the game'
         game-force-finish: '{player} §cforce§r-finished the game'
@@ -40,7 +65,9 @@ messages: # Can be used to add translation
         property-already-in-game: This property is already in game!
         no-houses-left: There are no more houses left! (Maximum of 32)
         no-hotels-left: There are no more hotels left! (Maximum of 12)
-    help: # Not intended to be edited
+    # not intended to be edited
+    # when adding translation, please carefully keep formatting (if you are unsure how it works)
+    help:
         header: §7-------- §6[§aMineNopoly§6] §7------------------------
         help: §a/mn §6help §a[command] §r- Show help for given command, for available commands otherwise
         start: §a/mn §6start §a<block> §r- Start the game with given block as the bank
